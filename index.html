@@ -75,15 +75,19 @@
     gap:16px;
   }
   .brand{
-    display:flex; align-items:baseline; gap:10px;
-    font-family:'Bricolage Grotesque', sans-serif; font-size:1.18rem; font-weight:700;
-    letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:10px;
+    color:var(--ink); text-decoration:none;
   }
-  .brand .mark{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.68rem; letter-spacing:0.1em;
-    color:var(--gold); border:1px solid var(--line);
-    padding:2px 6px; border-radius:2px;
+  .brand .badge{
+    width:30px; height:30px; border-radius:7px; flex:none;
+    background:var(--forest-strong); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:0.86rem;
+    letter-spacing:0;
+  }
+  .brand .name{
+    font-family:'Bricolage Grotesque', sans-serif; font-size:1.12rem; font-weight:600;
+    letter-spacing:-0.015em;
   }
   nav.primary{ display:flex; gap:4px; }
   nav.primary button{
@@ -96,28 +100,6 @@
   nav.primary button:hover{ color:var(--ink); background:var(--paper-raised); }
   nav.primary button[aria-current="page"]{ color:var(--forest-strong); font-weight:600; }
   .nav-toggle{ display:none; }
-
-  /* ---------- masthead strip ---------- */
-  .strip{
-    border-bottom:1px solid var(--line);
-    overflow:hidden; white-space:nowrap;
-    background:var(--paper-raised);
-  }
-  .strip-track{
-    display:inline-flex; gap:36px; padding:7px 0;
-    animation: scroll-strip 34s linear infinite;
-  }
-  .strip-track span{
-    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; letter-spacing:0.05em;
-    color:var(--muted);
-  }
-  @keyframes scroll-strip{
-    from{ transform:translateX(0); }
-    to{ transform:translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .strip-track{ animation:none; }
-  }
 
   main{ padding-bottom:100px; }
   section.page{ display:none; padding-top:56px; }
@@ -160,14 +142,6 @@
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--muted); text-align:center; padding:20px;
   }
-  .hero-portrait .portrait-tag{
-    position:absolute; left:14px; bottom:14px;
-    background:var(--paper); border:1px solid var(--line); border-radius:20px;
-    padding:6px 12px; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.06em;
-    display:flex; align-items:center; gap:6px; color:var(--ink);
-  }
-  .hero-portrait .portrait-tag .dot{ width:6px; height:6px; border-radius:50%; background:var(--forest-strong); }
-
   .feature-strip{
     display:grid; grid-template-columns:repeat(3,1fr); gap:0;
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
@@ -323,7 +297,7 @@
 
 <header class="masthead">
   <div class="shell masthead-inner">
-    <div class="brand">Yash Banthia <span class="mark">EQ&nbsp;RESEARCH</span></div>
+    <div class="brand"><span class="badge">YB</span><span class="name">Yash Banthia</span></div>
     <nav class="primary" id="primary-nav">
       <button data-page="about" aria-current="page">About</button>
       <button data-page="markets">Markets</button>
@@ -331,12 +305,6 @@
       <button data-page="videos">Videos</button>
       <button data-page="contact">Contact</button>
     </nav>
-  </div>
-  <div class="strip" aria-hidden="true">
-    <div class="strip-track">
-      <span>VALUATION</span><span>EQUITY RESEARCH</span><span>FINANCIAL MODELLING</span><span>MARKET COMMENTARY</span><span>ESB REUTLINGEN · MBA</span><span>KOLKATA, IN</span>
-      <span>VALUATION</span><span>EQUITY RESEARCH</span><span>FINANCIAL MODELLING</span><span>MARKET COMMENTARY</span><span>ESB REUTLINGEN · MBA</span><span>KOLKATA, IN</span>
-    </div>
   </div>
 </header>
 
@@ -354,7 +322,6 @@
       <div class="hero-portrait">
         <img src="images/yash-hero.jpg" alt="Yash Banthia" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="portrait-fallback" style="display:none;">Add images/yash-hero.jpg to show a photo here</div>
-        <span class="portrait-tag"><span class="dot"></span>Kolkata, India</span>
       </div>
     </div>
 
