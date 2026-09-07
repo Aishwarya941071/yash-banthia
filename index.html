@@ -1,0 +1,477 @@
+<title>Yash Banthia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2f1ea;
+    --paper-raised:#ebe9df;
+    --ink:#1b241f;
+    --ink-soft:#3c453e;
+    --forest:#1f4436;
+    --forest-strong:#153027;
+    --gold:#9c7a2e;
+    --line:#d6d2c2;
+    --muted:#6f6d5e;
+    --danger:#8a3b2b;
+    --up:#1f6b4a;
+    --down:#a13f2c;
+    --shadow: 0 1px 0 rgba(27,36,31,0.06);
+    --focus: #1f4436;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#14100 ;
+      --paper:#131611;
+      --paper-raised:#1b1f19;
+      --ink:#ece8dd;
+      --ink-soft:#c3c1b3;
+      --forest:#5fae8b;
+      --forest-strong:#7fc7a4;
+      --gold:#d3ac5c;
+      --line:#2c3129;
+      --muted:#9a9788;
+      --danger:#d97b64;
+      --up:#5fae8b;
+      --down:#d97b64;
+      --shadow: 0 1px 0 rgba(0,0,0,0.4);
+      --focus: #7fc7a4;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#131611;
+    --paper-raised:#1b1f19;
+    --ink:#ece8dd;
+    --ink-soft:#c3c1b3;
+    --forest:#5fae8b;
+    --forest-strong:#7fc7a4;
+    --gold:#d3ac5c;
+    --line:#2c3129;
+    --muted:#9a9788;
+    --danger:#d97b64;
+    --up:#5fae8b;
+    --down:#d97b64;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4);
+    --focus: #7fc7a4;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background: var(--forest); color: var(--paper); }
+  a{ color:inherit; }
+  :focus-visible{ outline: 2px solid var(--focus); outline-offset: 3px; }
+
+  h1,h2,h3{
+    font-family:'Newsreader', Georgia, 'Times New Roman', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  .mono{
+    font-family:'IBM Plex Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ---------- shell ---------- */
+  .shell{ max-width:920px; margin:0 auto; padding:0 28px; }
+
+  header.masthead{
+    border-bottom:1px solid var(--line);
+    background:var(--paper);
+    position:sticky; top:0; z-index:20;
+    backdrop-filter: saturate(140%) blur(6px);
+  }
+  .masthead-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+    gap:16px;
+  }
+  .brand{
+    display:flex; align-items:baseline; gap:10px;
+    font-family:'Newsreader', serif; font-size:1.18rem; font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .brand .mark{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem; letter-spacing:0.1em;
+    color:var(--gold); border:1px solid var(--line);
+    padding:2px 6px; border-radius:2px;
+  }
+  nav.primary{ display:flex; gap:4px; }
+  nav.primary button{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.74rem; letter-spacing:0.06em; text-transform:uppercase;
+    background:none; border:none; color:var(--muted);
+    padding:8px 12px; cursor:pointer; border-radius:3px;
+    transition: color .15s ease, background .15s ease;
+  }
+  nav.primary button:hover{ color:var(--ink); background:var(--paper-raised); }
+  nav.primary button[aria-current="page"]{ color:var(--forest-strong); font-weight:600; }
+  .nav-toggle{ display:none; }
+
+  /* ---------- masthead strip ---------- */
+  .strip{
+    border-bottom:1px solid var(--line);
+    overflow:hidden; white-space:nowrap;
+    background:var(--paper-raised);
+  }
+  .strip-track{
+    display:inline-flex; gap:36px; padding:7px 0;
+    animation: scroll-strip 34s linear infinite;
+  }
+  .strip-track span{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; letter-spacing:0.05em;
+    color:var(--muted);
+  }
+  @keyframes scroll-strip{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .strip-track{ animation:none; }
+  }
+
+  main{ padding-bottom:100px; }
+  section.page{ display:none; padding-top:56px; }
+  section.page.active{ display:block; }
+
+  /* ---------- hero / about ---------- */
+  .hero{
+    display:grid; grid-template-columns: 1.4fr 1fr; gap:40px;
+    padding-bottom:36px; border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .hero h1{ font-size:2.7rem; line-height:1.05; margin-bottom:14px; }
+  .hero .role{ font-size:1.15rem; color:var(--forest-strong); font-weight:500; margin-bottom:18px; font-family:'Newsreader',serif; font-style:italic;}
+  .hero p.lede{ font-size:1.02rem; line-height:1.65; color:var(--ink-soft); max-width:58ch; }
+  .hero-facts{
+    border:1px solid var(--line); border-radius:4px; background:var(--paper-raised);
+    padding:18px 20px; display:flex; flex-direction:column; gap:14px;
+  }
+  .fact{ display:flex; flex-direction:column; gap:2px; }
+  .fact dt{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .fact dd{ margin:0; font-size:0.92rem; color:var(--ink); }
+  .fact a{ text-decoration:none; border-bottom:1px solid var(--gold); }
+  .fact a:hover{ color:var(--forest-strong); }
+
+  .skills-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .skill-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; letter-spacing:0.03em;
+    border:1px solid var(--line); padding:5px 10px; border-radius:3px; color:var(--ink-soft);
+  }
+
+  .block{ padding:44px 0; border-bottom:1px solid var(--line); }
+  .block:last-child{ border-bottom:none; }
+  .block-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:24px; }
+  .block-head h2{ font-size:1.5rem; }
+  .block-head .eyebrow{ margin-bottom:4px; display:block; }
+
+  .timeline{ display:flex; flex-direction:column; gap:22px; }
+  .timeline-item{ display:grid; grid-template-columns: 130px 1fr; gap:18px; }
+  .timeline-item .when{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--muted); padding-top:3px; }
+  .timeline-item h3{ font-size:1.05rem; font-weight:600; font-family:'Public Sans',sans-serif; margin-bottom:4px;}
+  .timeline-item p{ margin:0; color:var(--ink-soft); font-size:0.94rem; line-height:1.6; max-width:56ch;}
+  .timeline-item .org{ color:var(--forest-strong); font-weight:500; }
+
+  /* ---------- cards ---------- */
+  .card-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .card{
+    border:1px solid var(--line); border-radius:5px; background:var(--paper-raised);
+    padding:22px; display:flex; flex-direction:column; gap:10px; height:100%;
+  }
+  .card .eyebrow{ display:flex; justify-content:space-between; }
+  .card h3{ font-size:1.12rem; font-family:'Newsreader',serif; font-weight:600; }
+  .card p{ margin:0; color:var(--ink-soft); font-size:0.9rem; line-height:1.55; flex:1; }
+  .card .read{
+    font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--forest-strong); text-decoration:none; display:inline-flex; align-items:center; gap:6px; margin-top:4px;
+  }
+  .card .read:hover{ color:var(--gold); }
+  .card .read svg{ width:12px; height:12px; }
+
+  .placeholder-note{
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--gold);
+    border:1px dashed var(--line); padding:8px 12px; border-radius:4px; margin-top:26px;
+    line-height:1.5;
+  }
+
+  /* ---------- videos ---------- */
+  .video-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .video-card{ border:1px solid var(--line); border-radius:5px; overflow:hidden; background:var(--paper-raised); }
+  .video-thumb{
+    aspect-ratio:16/9; background:
+      linear-gradient(135deg, var(--forest) 0%, var(--forest-strong) 100%);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .video-thumb .play{
+    width:46px; height:46px; border-radius:50%; background:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 10px rgba(0,0,0,0.25);
+  }
+  .video-thumb .play svg{ width:16px; height:16px; fill:var(--forest-strong); margin-left:2px; }
+  .video-meta{ padding:16px 18px; display:flex; flex-direction:column; gap:6px; }
+  .video-meta h3{ font-size:0.98rem; font-family:'Public Sans',sans-serif; font-weight:600; }
+  .video-meta .eyebrow{ margin-bottom:0; }
+
+  .channel-cta{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    border:1px solid var(--line); border-radius:5px; padding:20px 24px; background:var(--paper-raised);
+    margin-bottom:32px;
+  }
+  .channel-cta h3{ font-size:1.15rem; margin-bottom:4px; }
+  .channel-cta p{ margin:0; color:var(--muted); font-size:0.88rem; }
+  .btn{
+    font-family:'IBM Plex Mono',monospace; font-size:0.76rem; letter-spacing:0.05em; text-transform:uppercase;
+    background:var(--forest-strong); color:var(--paper); text-decoration:none;
+    padding:11px 18px; border-radius:3px; white-space:nowrap; border:1px solid var(--forest-strong);
+    transition:opacity .15s ease;
+  }
+  .btn:hover{ opacity:0.85; }
+  .btn.ghost{ background:none; color:var(--forest-strong); }
+
+  /* ---------- markets ---------- */
+  .market-note{
+    border:1px solid var(--line); border-radius:5px; padding:22px 24px; margin-bottom:18px; background:var(--paper-raised);
+  }
+  .market-note-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; flex-wrap:wrap;}
+  .ticker-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:0.74rem; font-weight:500;
+    padding:3px 8px; border-radius:3px; border:1px solid var(--line);
+  }
+  .ticker-tag.up{ color:var(--up); border-color:var(--up); }
+  .ticker-tag.down{ color:var(--down); border-color:var(--down); }
+  .market-note h3{ font-size:1.08rem; margin-bottom:8px; font-family:'Newsreader',serif; }
+  .market-note p{ margin:0; color:var(--ink-soft); font-size:0.92rem; line-height:1.6; }
+  .market-note .date{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--muted); }
+
+  /* ---------- contact ---------- */
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .contact-card{
+    border:1px solid var(--line); border-radius:5px; padding:22px; background:var(--paper-raised);
+    display:flex; flex-direction:column; gap:8px; text-decoration:none;
+  }
+  .contact-card .eyebrow{ margin-bottom:2px; }
+  .contact-card strong{ font-size:1rem; }
+  .contact-card:hover{ border-color:var(--forest-strong); }
+
+  footer{
+    border-top:1px solid var(--line); padding:26px 0; margin-top:0;
+  }
+  footer .shell{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  footer .eyebrow{ margin:0; }
+
+  @media (max-width: 760px){
+    .masthead-inner{ flex-wrap:wrap; }
+    nav.primary{ order:3; width:100%; overflow-x:auto; padding-top:6px; border-top:1px solid var(--line); margin-top:8px; }
+    .hero{ grid-template-columns:1fr; }
+    .card-grid, .video-grid, .contact-grid{ grid-template-columns:1fr; }
+    .timeline-item{ grid-template-columns:1fr; gap:4px; }
+    .hero h1{ font-size:2.1rem; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="shell masthead-inner">
+    <div class="brand">Yash Banthia <span class="mark">EQ&nbsp;RESEARCH</span></div>
+    <nav class="primary" id="primary-nav">
+      <button data-page="about" aria-current="page">About</button>
+      <button data-page="markets">Markets</button>
+      <button data-page="blog">Blog</button>
+      <button data-page="videos">Videos</button>
+      <button data-page="contact">Contact</button>
+    </nav>
+  </div>
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <span>VALUATION</span><span>EQUITY RESEARCH</span><span>FINANCIAL MODELLING</span><span>MARKET COMMENTARY</span><span>ESB REUTLINGEN · MBA</span><span>KOLKATA, IN</span>
+      <span>VALUATION</span><span>EQUITY RESEARCH</span><span>FINANCIAL MODELLING</span><span>MARKET COMMENTARY</span><span>ESB REUTLINGEN · MBA</span><span>KOLKATA, IN</span>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- ABOUT -->
+  <section class="page active" id="page-about">
+    <div class="hero">
+      <div>
+        <span class="eyebrow">About</span>
+        <h1>Yash Banthia</h1>
+        <div class="role">Finance &amp; Investment Professional</div>
+        <p class="lede">Experienced valuation and equity research analyst with a demonstrated history of working across the financial services industry — skilled in financial management, internal audit, financial accounting, and income tax, with an MBA in International Business from ESB Business School, Reutlingen, Germany.</p>
+        <div class="skills-row">
+          <span class="skill-tag">Equity Research</span>
+          <span class="skill-tag">Valuation</span>
+          <span class="skill-tag">Financial Modelling</span>
+          <span class="skill-tag">Internal Audit</span>
+          <span class="skill-tag">Financial Accounting</span>
+          <span class="skill-tag">Income Tax</span>
+        </div>
+      </div>
+      <dl class="hero-facts">
+        <div class="fact"><dt>Current</dt><dd>Outpost Capital</dd></div>
+        <div class="fact"><dt>Based in</dt><dd>Kolkata, West Bengal, India</dd></div>
+        <div class="fact"><dt>Education</dt><dd>MBA, International Business — ESB Business School, Reutlingen</dd></div>
+        <div class="fact"><dt>Elsewhere</dt><dd><a href="https://www.linkedin.com/in/yashbanthia/" target="_blank" rel="noopener">LinkedIn profile ↗</a></dd></div>
+      </dl>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <div><span class="eyebrow">Background</span><h2>A note on the work</h2></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="when">2025 — Present</div>
+          <div><h3><span class="org">Outpost Capital</span></h3><p>Currently building on a career in equity research and valuation, translating financial statements and market data into investment views.</p></div>
+        </div>
+        <div class="timeline-item">
+          <div class="when">MBA</div>
+          <div><h3><span class="org">ESB Business School</span>, Reutlingen, Germany</h3><p>Master of Business Administration focused in International Business, Trade &amp; Commerce.</p></div>
+        </div>
+      </div>
+      <p class="placeholder-note">This background section is intentionally brief — it reflects only what's verifiable from the public LinkedIn profile. Add earlier roles, certifications, and specific engagements here as you'd like them to appear.</p>
+    </div>
+  </section>
+
+  <!-- MARKETS -->
+  <section class="page" id="page-markets">
+    <span class="eyebrow">Updated regularly</span>
+    <h1 style="font-size:2.1rem; margin:8px 0 6px;">Market Notes</h1>
+    <p class="lede" style="margin-bottom:32px;">Short, dated views on stocks, sectors, and the broader market — the running notebook behind the research. Newest first.</p>
+
+    <div class="market-note">
+      <div class="market-note-head">
+        <span class="ticker-tag up">SAMPLE</span>
+        <span class="date">07 Sep 2026</span>
+      </div>
+      <h3>Where I'd look for value this quarter</h3>
+      <p>This is a placeholder entry showing the format for a market note: a quick thesis, the catalyst you're watching, and the risk that would change your mind. Replace with your actual view — sector, ticker, and time horizon.</p>
+    </div>
+    <div class="market-note">
+      <div class="market-note-head">
+        <span class="ticker-tag down">SAMPLE</span>
+        <span class="date">24 Aug 2026</span>
+      </div>
+      <h3>A risk worth flagging</h3>
+      <p>Second placeholder note — use this slot for a caution, a valuation concern, or a macro read that's shaping how you're positioning. Keep it short and dated so readers can follow your thinking over time.</p>
+    </div>
+    <div class="market-note">
+      <div class="market-note-head">
+        <span class="ticker-tag up">SAMPLE</span>
+        <span class="date">10 Aug 2026</span>
+      </div>
+      <h3>On earnings season</h3>
+      <p>Third placeholder — a good spot for post-earnings reactions or a running scorecard of calls you've made, with the outcome noted honestly.</p>
+    </div>
+    <p class="placeholder-note">All three notes above are samples marking the layout — none are real market commentary. Swap in your own dated views; this page is designed to be updated frequently.</p>
+  </section>
+
+  <!-- BLOG -->
+  <section class="page" id="page-blog">
+    <span class="eyebrow">Writing</span>
+    <h1 style="font-size:2.1rem; margin:8px 0 6px;">Blog</h1>
+    <p class="lede" style="margin-bottom:32px;">Longer-form pieces on markets, valuation, and finance — hosted on the external blog and linked from here.</p>
+    <div class="card-grid">
+      <div class="card">
+        <span class="eyebrow"><span>Sample post</span><span>—</span></span>
+        <h3>Reading a balance sheet like an analyst</h3>
+        <p>Placeholder card — replace the title, date, and summary with your first published post, and point the link below at it.</p>
+        <a class="read" href="#" target="_blank" rel="noopener">Read on blog <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></a>
+      </div>
+      <div class="card">
+        <span class="eyebrow"><span>Sample post</span><span>—</span></span>
+        <h3>What a valuation multiple actually tells you</h3>
+        <p>Second placeholder card. Add as many as you like — each one links out to the corresponding post on your blog platform of choice.</p>
+        <a class="read" href="#" target="_blank" rel="noopener">Read on blog <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></a>
+      </div>
+    </div>
+    <p class="placeholder-note">Both posts above are placeholders. Update the href on each "Read on blog" link to your actual blog URL, and edit the titles/summaries to match.</p>
+  </section>
+
+  <!-- VIDEOS -->
+  <section class="page" id="page-videos">
+    <span class="eyebrow">Watch</span>
+    <h1 style="font-size:2.1rem; margin:8px 0 6px;">Videos</h1>
+    <p class="lede" style="margin-bottom:28px;">Market breakdowns and commentary on YouTube.</p>
+
+    <div class="channel-cta">
+      <div>
+        <h3>Subscribe on YouTube</h3>
+        <p>Link this to your channel to keep viewers coming back for new uploads.</p>
+      </div>
+      <a class="btn" href="#" target="_blank" rel="noopener">Visit channel ↗</a>
+    </div>
+
+    <div class="video-grid">
+      <div class="video-card">
+        <a href="#" target="_blank" rel="noopener" class="video-thumb"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
+        <div class="video-meta"><span class="eyebrow">Sample video</span><h3>Placeholder title — replace with a video name</h3></div>
+      </div>
+      <div class="video-card">
+        <a href="#" target="_blank" rel="noopener" class="video-thumb"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
+        <div class="video-meta"><span class="eyebrow">Sample video</span><h3>Placeholder title — replace with a video name</h3></div>
+      </div>
+    </div>
+    <p class="placeholder-note">Both thumbnails and the channel button are placeholders — point them at your real YouTube channel and video URLs.</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="page" id="page-contact">
+    <span class="eyebrow">Get in touch</span>
+    <h1 style="font-size:2.1rem; margin:8px 0 24px;">Contact</h1>
+    <div class="contact-grid">
+      <a class="contact-card" href="https://www.linkedin.com/in/yashbanthia/" target="_blank" rel="noopener">
+        <span class="eyebrow">LinkedIn</span>
+        <strong>in/yashbanthia</strong>
+      </a>
+      <a class="contact-card" href="#">
+        <span class="eyebrow">Email</span>
+        <strong>your.email@example.com</strong>
+      </a>
+    </div>
+    <p class="placeholder-note">Replace the email placeholder with a real address before publishing.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="shell">
+    <span class="eyebrow">© 2026 Yash Banthia</span>
+    <span class="eyebrow">Kolkata, India</span>
+  </div>
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('nav.primary button');
+  const pages = document.querySelectorAll('section.page');
+  function showPage(name){
+    pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
+    buttons.forEach(b => {
+      if(b.dataset.page === name){ b.setAttribute('aria-current','page'); }
+      else { b.removeAttribute('aria-current'); }
+    });
+    window.scrollTo({top:0, behavior:'instant'});
+    history.replaceState(null, '', '#' + name);
+  }
+  buttons.forEach(b => b.addEventListener('click', () => showPage(b.dataset.page)));
+  const initial = (location.hash || '#about').slice(1);
+  if(document.getElementById('page-' + initial)) showPage(initial);
+</script>
