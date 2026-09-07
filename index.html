@@ -5,55 +5,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#f2f1ea;
-    --paper-raised:#ebe9df;
-    --ink:#1b241f;
-    --ink-soft:#3c453e;
-    --forest:#1f4436;
-    --forest-strong:#153027;
-    --gold:#9c7a2e;
-    --line:#d6d2c2;
-    --muted:#6f6d5e;
-    --danger:#8a3b2b;
-    --up:#1f6b4a;
+    --paper:#fbf6f7;
+    --paper-raised:#e7eaed;
+    --ink:#182228;
+    --ink-soft:#3d5560;
+    --forest:#8ec5ea;
+    --forest-strong:#3f7590;
+    --gold:#3f7590;
+    --line:#d6dade;
+    --muted:#6c7a83;
+    --danger:#a13f2c;
+    --up:#2f7d5c;
     --down:#a13f2c;
-    --shadow: 0 1px 0 rgba(27,36,31,0.06);
-    --focus: #1f4436;
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --paper:#14100 ;
-      --paper:#131611;
-      --paper-raised:#1b1f19;
-      --ink:#ece8dd;
-      --ink-soft:#c3c1b3;
-      --forest:#5fae8b;
-      --forest-strong:#7fc7a4;
-      --gold:#d3ac5c;
-      --line:#2c3129;
-      --muted:#9a9788;
-      --danger:#d97b64;
-      --up:#5fae8b;
-      --down:#d97b64;
-      --shadow: 0 1px 0 rgba(0,0,0,0.4);
-      --focus: #7fc7a4;
-    }
-  }
-  :root[data-theme="dark"]{
-    --paper:#131611;
-    --paper-raised:#1b1f19;
-    --ink:#ece8dd;
-    --ink-soft:#c3c1b3;
-    --forest:#5fae8b;
-    --forest-strong:#7fc7a4;
-    --gold:#d3ac5c;
-    --line:#2c3129;
-    --muted:#9a9788;
-    --danger:#d97b64;
-    --up:#5fae8b;
-    --down:#d97b64;
-    --shadow: 0 1px 0 rgba(0,0,0,0.4);
-    --focus: #7fc7a4;
+    --shadow: 0 1px 0 rgba(24,34,40,0.06);
+    --focus: #3f7590;
   }
 
   *{box-sizing:border-box;}
@@ -164,13 +129,6 @@
     padding-bottom:0; align-items:center;
   }
   .hero-copy{ padding-top:8px; }
-  .hero-tag{
-    display:inline-flex; align-items:center; gap:7px;
-    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
-    color:var(--ink-soft); border:1px solid var(--line); border-radius:20px; padding:5px 12px 5px 10px;
-    margin-bottom:22px; background:var(--paper-raised);
-  }
-  .hero-tag .dot{ width:7px; height:7px; border-radius:50%; background:var(--forest-strong); flex:none; }
   .hero-greeting{
     display:block; font-family:'Instrument Serif', serif; font-style:italic; font-size:1.3rem;
     color:var(--ink-soft); margin-bottom:2px;
@@ -388,7 +346,6 @@
   <section class="page active" id="page-about">
     <div class="hero">
       <div class="hero-copy">
-        <span class="hero-tag"><span class="dot"></span>Outpost Capital</span>
         <span class="hero-greeting">Hey, I'm Yash —</span>
         <h1>A Valuation &amp;<br><em>Equity Research</em><br>Professional</h1>
         <p class="lede">I read balance sheets for a living — building financial models, sizing up valuations, and forming views on markets, backed by an MBA in International Business from ESB Business School, Reutlingen.</p>
