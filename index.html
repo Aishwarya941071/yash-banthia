@@ -257,6 +257,111 @@
   .market-note h3{ font-size:1.08rem; margin-bottom:8px; font-family:'Bricolage Grotesque',sans-serif; }
   .market-note p{ margin:0; color:var(--ink-soft); font-size:0.92rem; line-height:1.6; }
   .market-note .date{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--muted); }
+  .market-note .read{
+    font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--forest-strong); text-decoration:none; display:inline-flex; align-items:center; gap:6px; margin-top:14px;
+  }
+  .market-note .read:hover{ color:var(--gold); }
+  .market-note .read svg{ width:12px; height:12px; }
+
+  /* ---------- market note article ---------- */
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px; margin-bottom:24px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.76rem; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--muted); text-decoration:none;
+  }
+  .back-link:hover{ color:var(--forest-strong); }
+  .back-link svg{ width:13px; height:13px; }
+
+  .note-article{ padding-bottom:20px; }
+  .article-head{ padding-bottom:28px; border-bottom:1px solid var(--line); margin-bottom:32px; }
+  .meta-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  .meta-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.04em;
+    border:1px solid var(--line); padding:5px 11px; border-radius:20px; color:var(--ink-soft);
+    background:var(--paper-raised);
+  }
+  .meta-tag.bias-bullish{ color:var(--up); border-color:var(--up); background:transparent; }
+  .article-head h1{ font-size:2.1rem; line-height:1.12; margin-bottom:10px; }
+  .article-head .sub{ font-family:'Instrument Serif',serif; font-style:italic; font-size:1.2rem; color:var(--ink-soft); }
+  .byline{
+    display:flex; align-items:center; gap:10px; margin-top:20px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.74rem; color:var(--muted);
+  }
+  .byline .dot{ width:4px; height:4px; border-radius:50%; background:var(--muted); }
+
+  .note-section{ margin-bottom:44px; }
+  .note-section .block-head{ margin-bottom:18px; }
+  .note-section .block-head h2{ font-size:1.4rem; }
+
+  .plan-table{ width:100%; border-collapse:collapse; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .plan-table th, .plan-table td{ text-align:left; padding:13px 16px; border-bottom:1px solid var(--line); font-size:0.9rem; vertical-align:top; }
+  .plan-table th{
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--muted); background:var(--paper-raised); font-weight:500;
+  }
+  .plan-table tr:last-child td{ border-bottom:none; }
+  .plan-table td.metric{ font-weight:600; color:var(--ink); white-space:nowrap; }
+  .plan-table td.level{ font-family:'IBM Plex Mono',monospace; font-weight:500; white-space:nowrap; }
+  .plan-table td.notes{ color:var(--ink-soft); }
+  .plan-table tr.sl td.level{ color:var(--down); }
+  .plan-table tr.entry td.level{ color:var(--up); }
+  .table-wrap{ overflow-x:auto; margin-bottom:8px; }
+
+  .insight-box{
+    border:1px solid var(--line); border-left:3px solid var(--forest-strong); border-radius:0 6px 6px 0;
+    background:var(--paper-raised); padding:16px 20px; margin-top:20px;
+  }
+  .insight-box .eyebrow{ margin-bottom:6px; display:block; }
+  .insight-box p{ margin:0; font-size:0.92rem; line-height:1.6; color:var(--ink-soft); }
+
+  .chart-block{ margin:26px 0; }
+  .chart-block img{ width:100%; display:block; border:1px solid var(--line); border-radius:6px; background:#fff; }
+  .chart-caption{
+    font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--muted);
+    margin-top:8px; letter-spacing:0.02em;
+  }
+
+  .note-subsection{ margin-bottom:26px; }
+  .note-subsection h3{ font-size:1.05rem; margin-bottom:10px; font-family:'Bricolage Grotesque',sans-serif; }
+  .point-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .point-list li{ font-size:0.94rem; line-height:1.65; color:var(--ink-soft); padding-left:18px; position:relative; }
+  .point-list li::before{
+    content:''; position:absolute; left:0; top:0.55em; width:6px; height:6px; border-radius:50%; background:var(--forest-strong);
+  }
+  .point-list strong{ color:var(--ink); font-weight:600; }
+
+  .fin-table{ width:100%; border-collapse:collapse; font-size:0.86rem; }
+  .fin-table th, .fin-table td{ text-align:right; padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  .fin-table th:first-child, .fin-table td:first-child{ text-align:left; }
+  .fin-table th{
+    font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); font-weight:500; background:var(--paper-raised);
+  }
+  .fin-table td{ font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); }
+  .fin-table td:first-child{ font-family:'Public Sans',sans-serif; color:var(--ink); font-weight:500; }
+  .fin-table td.neg{ color:var(--down); }
+  .fin-table td.pos{ color:var(--up); }
+  .fin-note{ font-size:0.76rem; color:var(--muted); margin-top:10px; font-style:italic; }
+
+  .risk-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .risk-list li{ border:1px solid var(--line); border-radius:6px; padding:14px 16px; background:var(--paper-raised); }
+  .risk-list h3{ font-size:0.92rem; margin-bottom:5px; font-family:'Bricolage Grotesque',sans-serif; }
+  .risk-list p{ margin:0; font-size:0.88rem; color:var(--ink-soft); line-height:1.55; }
+
+  .takeaway{ border:1px solid var(--forest-strong); border-radius:6px; padding:22px 24px; background:var(--paper-raised); }
+  .takeaway p{ margin:0; font-size:0.98rem; line-height:1.7; color:var(--ink); }
+
+  .disclaimer-note{
+    margin-top:36px; padding-top:20px; border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--muted); line-height:1.6;
+  }
+
+  @media (max-width: 620px){
+    .article-head h1{ font-size:1.6rem; }
+    .plan-table th, .plan-table td{ padding:10px 12px; font-size:0.84rem; }
+    .fin-table{ font-size:0.76rem; }
+  }
 
   /* ---------- contact ---------- */
   .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
@@ -313,8 +418,8 @@
         <a class="hero-cta" href="#contact" data-page="contact">Get in touch <span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></span></a>
       </div>
       <div class="hero-portrait">
-        <img src="images/yash-hero.jpg" alt="Yash Banthia" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="portrait-fallback" style="display:none;">Add images/yash-hero.jpg to show a photo here</div>
+        <img src="images/yash-hero.png" alt="Yash Banthia" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="portrait-fallback" style="display:none;">Add images/yash-hero.png to show a photo here</div>
       </div>
     </div>
 
@@ -381,29 +486,138 @@
 
     <div class="market-note">
       <div class="market-note-head">
-        <span class="ticker-tag up">SAMPLE</span>
-        <span class="date">07 Sep 2026</span>
+        <span class="ticker-tag up">NSE: TI</span>
+        <span class="date">08 Sep 2026</span>
       </div>
-      <h3>Where I'd look for value this quarter</h3>
-      <p>This is a placeholder entry showing the format for a market note: a quick thesis, the catalyst you're watching, and the risk that would change your mind. Replace with your actual view — sector, ticker, and time horizon.</p>
+      <h3>Tilaknagar Industries — High-Tight Consolidation &amp; Scale Transformation</h3>
+      <p>Buy zone ₹520–₹540, SL ₹509. A technical setup building on a fundamental shift in scale following the Imperial Blue acquisition — full trade plan, chart analysis, and fundamentals inside.</p>
+      <a class="read" href="#market-tilaknagar" data-page="market-tilaknagar">Read full note <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></a>
     </div>
-    <div class="market-note">
-      <div class="market-note-head">
-        <span class="ticker-tag down">SAMPLE</span>
-        <span class="date">24 Aug 2026</span>
+  </section>
+
+  <!-- MARKET NOTE: TILAKNAGAR -->
+  <section class="page" id="page-market-tilaknagar">
+    <a class="back-link" href="#markets" data-page="markets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Market Notes</a>
+
+    <article class="note-article">
+      <div class="article-head">
+        <div class="meta-row">
+          <span class="meta-tag">Spirits &amp; Distilleries</span>
+          <span class="meta-tag">Swing / Positional</span>
+          <span class="meta-tag bias-bullish">Bullish</span>
+        </div>
+        <h1>Tilaknagar Industries — High-Tight Consolidation &amp; Scale Transformation</h1>
+        <div class="sub">A technical setup built on a fundamental shift in scale</div>
+        <div class="byline">
+          <span>Yash Banthia</span><span class="dot"></span><span>08 Sep 2026</span><span class="dot"></span><span>NSE: TI</span>
+        </div>
       </div>
-      <h3>A risk worth flagging</h3>
-      <p>Second placeholder note — use this slot for a caution, a valuation concern, or a macro read that's shaping how you're positioning. Keep it short and dated so readers can follow your thinking over time.</p>
-    </div>
-    <div class="market-note">
-      <div class="market-note-head">
-        <span class="ticker-tag up">SAMPLE</span>
-        <span class="date">10 Aug 2026</span>
+
+      <div class="note-section">
+        <div class="block-head"><span class="eyebrow">Executive Summary</span><h2>The trade execution plan</h2></div>
+        <p class="lede">Tilaknagar Industries is demonstrating remarkable relative strength, building a strong consolidation base above key moving averages while undergoing a fundamental shift in scale following its landmark acquisition of Imperial Blue.</p>
+        <div class="table-wrap">
+          <table class="plan-table">
+            <thead><tr><th>Execution Metric</th><th>Level / Details</th><th>Context &amp; Notes</th></tr></thead>
+            <tbody>
+              <tr class="entry"><td class="metric">Buy Zone (Entry)</td><td class="level">₹520 – ₹540</td><td class="notes">Accumulate on dips near the 50-day EMA support area.</td></tr>
+              <tr class="sl"><td class="metric">Stop Loss (SL)</td><td class="level">₹509</td><td class="notes">Strictly set below the recent daily swing low and 50 EMA key level.</td></tr>
+              <tr><td class="metric">Initial Target</td><td class="level">25% – 30% upside</td><td class="notes">Open-ended trailing strategy; targets will be updated dynamically as price develops.</td></tr>
+              <tr><td class="metric">Risk-Reward Profile</td><td class="level">~1:5+ Ratio</td><td class="notes">Tight risk (~2%–5.7% from entry zone) offering multi-fold asymmetric upside.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="insight-box">
+          <span class="eyebrow">Trading insight</span>
+          <p>The stock is consolidating after a primary expansion phase. Buying on pullbacks near dynamic support (50 EMA) allows for controlled risk management with an optimal risk-to-reward entry.</p>
+        </div>
       </div>
-      <h3>On earnings season</h3>
-      <p>Third placeholder — a good spot for post-earnings reactions or a running scorecard of calls you've made, with the outcome noted honestly.</p>
-    </div>
-    <p class="placeholder-note">All three notes above are samples marking the layout — none are real market commentary. Swap in your own dated views; this page is designed to be updated frequently.</p>
+
+      <div class="note-section">
+        <div class="block-head"><span class="eyebrow">Technical Analysis</span><h2>What the charts are telling us</h2></div>
+
+        <div class="note-subsection">
+          <h3>1. Weekly chart — strong base &amp; volume contraction</h3>
+          <ul class="point-list">
+            <li><strong>Base expansion:</strong> the stock delivered a strong expansion from a well-defined base established cleanly above its 50-week EMA.</li>
+            <li><strong>Volume footprints:</strong> clear evidence of accumulation — volume surges heavily during upward expansion moves and contracts significantly during price consolidation phases.</li>
+            <li><strong>Structural breakout:</strong> price decisively cleared the previous key resistance level around the ₹486 zone, turning prior resistance into macro support.</li>
+          </ul>
+          <div class="chart-block">
+            <img src="images/charts/tilaknagar-weekly-breakout.png" alt="Tilaknagar Industries weekly chart showing base expansion and breakout above the ₹486 resistance zone" loading="lazy">
+            <div class="chart-caption">Tilaknagar Industries Ltd · 1W · NSE — weekly base expansion and breakout</div>
+          </div>
+        </div>
+
+        <div class="note-subsection">
+          <h3>2. Daily chart — precise EMA reaction</h3>
+          <ul class="point-list">
+            <li><strong>Dynamic demand zone:</strong> on the daily timeframe, price action shows clear evidence of demand emerging directly off the 50-day EMA (~₹512–₹515 range).</li>
+            <li><strong>Risk anchoring:</strong> the ₹509 stop loss sits comfortably below this dynamic support zone, protecting against false breakdowns while keeping risk minimal.</li>
+          </ul>
+          <div class="chart-block">
+            <img src="images/charts/tilaknagar-daily-ema.png" alt="Tilaknagar Industries daily chart showing price reacting off the 50-day EMA" loading="lazy">
+            <div class="chart-caption">Tilaknagar Industries Ltd · 1D · NSE — daily EMA reaction</div>
+          </div>
+        </div>
+
+        <div class="note-subsection">
+          <h3>3. Sector confirmation — Radico Khaitan (industry leader)</h3>
+          <ul class="point-list">
+            <li><strong>Broad sector strength:</strong> looking at sector leader Radico Khaitan, the chart displays a healthy, ongoing uptrend with steady higher-highs, volume surges on rally legs, and well-behaved EMA pullbacks.</li>
+            <li><strong>Tailwind:</strong> leadership strength in Radico confirms that money flow remains active in the broader distillery/spirits space.</li>
+          </ul>
+          <div class="chart-block">
+            <img src="images/charts/tilaknagar-radico-daily.png" alt="Radico Khaitan daily chart showing sector uptrend confirmation" loading="lazy">
+            <div class="chart-caption">Radico Khaitan Ltd · 1D · NSE — sector leader confirmation</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-section">
+        <div class="block-head"><span class="eyebrow">Fundamentals in Brief</span><h2>The growth engine</h2></div>
+        <p class="lede">While charts dictate execution, understanding the underlying business shift provides conviction during trade holds. Tilaknagar has transitioned from a regional brandy brand to a pan-India spirits player following its acquisition of Imperial Blue.</p>
+
+        <div class="table-wrap">
+          <table class="fin-table">
+            <thead><tr><th>Period</th><th>Revenue (₹ Cr)</th><th>YoY Growth</th><th>EBITDA</th><th>OPM (%)</th><th>PAT (₹ Cr)</th></tr></thead>
+            <tbody>
+              <tr><td>Q1 FY26</td><td>₹409</td><td class="pos">+30.6%</td><td>₹102</td><td>23.1%</td><td>₹89</td></tr>
+              <tr><td>Q3 FY26</td><td>₹623</td><td class="pos">+82.9%</td><td>₹130</td><td>17.7%</td><td class="neg">-₹106*</td></tr>
+              <tr><td>Q4 FY26</td><td>₹949</td><td class="pos">+147.5%</td><td>₹200</td><td>16.3%</td><td class="neg">-₹15*</td></tr>
+              <tr><td>Q1 FY27</td><td>₹1,046</td><td class="pos">+155.7%</td><td>₹214</td><td>16.1%</td><td>₹31</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fin-note">*Negative PAT in Q3–Q4 FY26 was driven by ₹220 cr of exceptional, one-time acquisition-related integration expenses.</p>
+
+        <div class="note-subsection" style="margin-top:28px;">
+          <h3>3 key growth catalysts</h3>
+          <ul class="point-list">
+            <li><strong>Margin expansion:</strong> ~90% of Imperial Blue operations have exited transition services agreements, removing a ₹55–60 cr annual cost drag and unlocking 250–400 bps in guided margin expansion.</li>
+            <li><strong>In-house bottling capacity:</strong> Prag distillery's expansion to 36 lakh cases saves ~₹10 cr/year in bottling costs.</li>
+            <li><strong>Deleveraging focus:</strong> target net debt reduction to ~₹1,700 cr by March 2027 (down from ₹2,100 cr in June 2026), bringing Net Debt/EBITDA below 1.0x over the medium term.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note-section">
+        <div class="block-head"><span class="eyebrow">Risk Check</span><h2>Key risks to monitor</h2></div>
+        <ul class="risk-list">
+          <li><h3>Raw material volatility</h3><p>Extra Neutral Alcohol (ENA) makes up ~50% of raw material costs and remains subject to agro-commodity inflation.</p></li>
+          <li><h3>State pricing controls</h3><p>Price increases require state approval, limiting quick cost pass-through.</p></li>
+          <li><h3>Debt execution</h3><p>Post-acquisition focus remains on strict debt reduction and operational integration.</p></li>
+        </ul>
+      </div>
+
+      <div class="note-section" style="margin-bottom:0;">
+        <div class="block-head"><span class="eyebrow">Final Takeaway</span><h2>For traders</h2></div>
+        <div class="takeaway">
+          <p>Tilaknagar Industries presents a compelling combination of <em>technical strength</em> and a <em>fundamental scale transformation</em>. With risk strictly defined at ₹509, the technical setup allows us to participate in a potential 25%–30%+ leg higher while maintaining tight risk control.</p>
+        </div>
+        <p class="disclaimer-note">Disclaimer: This analysis is for educational and informational purposes only and does not constitute financial advice. Always manage your own risk.</p>
+      </div>
+    </article>
   </section>
 
   <!-- BLOG -->
@@ -484,10 +698,12 @@
 <script>
   const buttons = document.querySelectorAll('nav.primary button');
   const pages = document.querySelectorAll('section.page');
+  const navAliases = { 'market-tilaknagar': 'markets' };
   function showPage(name){
     pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
+    const navKey = navAliases[name] || name;
     buttons.forEach(b => {
-      if(b.dataset.page === name){ b.setAttribute('aria-current','page'); }
+      if(b.dataset.page === navKey){ b.setAttribute('aria-current','page'); }
       else { b.removeAttribute('aria-current'); }
     });
     window.scrollTo({top:0, behavior:'instant'});
