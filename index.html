@@ -174,6 +174,88 @@
   .headshot-row .who strong{ font-family:'Bricolage Grotesque',sans-serif; font-size:0.98rem; }
   .headshot-row .who span{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--muted); }
 
+  /* ---------- about: hero visual ---------- */
+  .hero-visual svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .hero-visual-quote{
+    position:absolute; left:0; right:0; bottom:0; padding:20px 22px 18px;
+    background:var(--paper); border-top:1px solid var(--line);
+  }
+  .hero-visual-quote blockquote{
+    font-family:'Instrument Serif', serif; font-style:italic; font-size:1.08rem; line-height:1.4;
+    color:var(--ink); margin:0 0 8px;
+  }
+  .hero-visual-quote .cap{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted);
+  }
+
+  /* ---------- about: stat tiles ---------- */
+  .stat-tiles{ display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); margin-top:32px; }
+  .stat-tiles div{ padding:18px 22px 0; border-left:1px solid var(--line); }
+  .stat-tiles div:first-child{ border-left:none; padding-left:0; }
+  .stat-num{ font-family:'Bricolage Grotesque',sans-serif; font-size:1.7rem; font-weight:700; color:var(--ink); margin-bottom:4px; }
+
+  /* ---------- about: pillar grid ---------- */
+  .pillar-grid{ display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .pillar-grid > div{ padding:24px; border-left:1px solid var(--line); }
+  .pillar-grid > div:first-child{ border-left:none; padding-left:0; }
+  .pillar-icon{
+    width:34px; height:34px; border-radius:50%; background:var(--paper-raised);
+    display:flex; align-items:center; justify-content:center; margin-bottom:16px; color:var(--forest-strong);
+  }
+  .pillar-icon svg{ width:16px; height:16px; }
+  .pillar-grid h3{ font-size:1rem; margin-bottom:8px; line-height:1.3; }
+  .pillar-grid p{ margin:0; font-size:0.86rem; line-height:1.55; color:var(--ink-soft); }
+
+  /* ---------- about: quote block ---------- */
+  .quote-block{ border-left:3px solid var(--forest-strong); padding:4px 0 4px 20px; margin-top:24px; }
+  .quote-block blockquote{ font-family:'Instrument Serif',serif; font-style:italic; font-size:1.35rem; line-height:1.4; color:var(--ink); margin:0; }
+
+  .table-status{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:16px; padding-top:14px;
+    border-top:1px solid var(--line); font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.04em;
+    color:var(--muted); text-transform:uppercase; flex-wrap:wrap;
+  }
+  .table-status .live{ color:var(--forest-strong); font-weight:500; }
+
+  /* ---------- about: phase panels ---------- */
+  .phase-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .phase-panel{ border:1px solid var(--line); border-radius:6px; padding:24px; background:var(--paper-raised); }
+  .phase-panel h4{
+    font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);
+    padding-bottom:14px; margin-bottom:18px; border-bottom:1px solid var(--line); font-weight:500;
+  }
+  .step-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:18px; }
+  .step-list li{ display:flex; gap:14px; align-items:baseline; }
+  .step-list .step-num{ font-family:'IBM Plex Mono',monospace; font-size:0.76rem; color:var(--muted); flex:none; width:18px; }
+  .step-list strong{ display:block; font-family:'Bricolage Grotesque',sans-serif; font-size:0.95rem; font-weight:600; color:var(--ink); margin-bottom:2px; }
+  .step-list span{ font-size:0.82rem; color:var(--ink-soft); line-height:1.5; }
+
+  /* ---------- about: condensed timeline ---------- */
+  .mini-timeline{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; border-top:1px solid var(--line); padding-top:20px; margin-top:20px; }
+  .mini-timeline .when{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--muted); display:block; margin-bottom:6px; }
+  .mini-timeline h4{ font-size:1rem; margin-bottom:2px; }
+  .mini-timeline .sub{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--forest-strong); }
+
+  .view-full-link{
+    display:inline-flex; align-items:center; gap:6px; margin-top:18px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.74rem; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--ink); text-decoration:none; border-bottom:1px solid var(--ink); padding-bottom:2px;
+  }
+  .view-full-link:hover{ color:var(--forest-strong); border-color:var(--forest-strong); }
+
+  .cta-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  @media (max-width: 760px){
+    .pillar-grid{ grid-template-columns:1fr 1fr; }
+    .pillar-grid > div:nth-child(2){ border-left:1px solid var(--line); }
+    .pillar-grid > div:nth-child(odd){ border-left:none; padding-left:0; }
+    .phase-grid{ grid-template-columns:1fr; }
+    .mini-timeline{ grid-template-columns:1fr 1fr; }
+    .stat-tiles{ grid-template-columns:1fr; }
+    .stat-tiles div{ border-left:none; padding-left:0; border-top:1px solid var(--line); padding-top:16px; }
+    .stat-tiles div:first-child{ border-top:none; padding-top:0; }
+  }
+
   .block{ padding:44px 0; border-bottom:1px solid var(--line); }
   .block:last-child{ border-bottom:none; }
   .block-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:24px; }
@@ -189,6 +271,7 @@
 
   /* ---------- cards ---------- */
   .card-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .card-grid.cols-3{ grid-template-columns:repeat(3,1fr); }
   .card{
     border:1px solid var(--line); border-radius:5px; background:var(--paper-raised);
     padding:22px; display:flex; flex-direction:column; gap:10px; height:100%;
@@ -387,7 +470,7 @@
     .feature-strip{ grid-template-columns:1fr; }
     .feature-strip div{ border-left:none; border-top:1px solid var(--line); padding-left:0; }
     .feature-strip div:first-child{ border-top:none; }
-    .card-grid, .video-grid, .contact-grid{ grid-template-columns:1fr; }
+    .card-grid, .video-grid, .contact-grid, .card-grid.cols-3{ grid-template-columns:1fr; }
     .timeline-item{ grid-template-columns:1fr; gap:4px; }
     .hero h1{ font-size:2.1rem; }
   }
@@ -412,29 +495,35 @@
   <section class="page active" id="page-about">
     <div class="hero">
       <div class="hero-copy">
-        <span class="hero-greeting">Hey, I'm Yash —</span>
-        <h1>A Valuation &amp;<br><em>Equity Research</em><br>Professional</h1>
-        <p class="lede">I read balance sheets for a living — building financial models, sizing up valuations, and forming views on markets, backed by an MBA in International Business from ESB Business School, Reutlingen.</p>
-        <a class="hero-cta" href="#contact" data-page="contact">Get in touch <span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></span></a>
+        <span class="eyebrow" style="display:block; margin-bottom:14px;">About</span>
+        <h1>I wait.<br><em>Then I bet big.</em></h1>
+        <p class="lede" style="margin-bottom:8px; color:var(--ink); font-weight:500;">Concentrated positions. Tight risk. High-conviction setups.</p>
+        <p class="lede">I look for stocks where the charts, fundamentals, and risk-reward align. When the setup is right, I move quickly and build a meaningful position. When it isn't, I'm perfectly happy sitting in cash.</p>
+        <div class="stat-tiles">
+          <div><div class="stat-num">2–3%</div><span class="eyebrow">Typical Risk</span></div>
+          <div><div class="stat-num">15–30%</div><span class="eyebrow">Initial Target</span></div>
+          <div><div class="stat-num">Few</div><span class="eyebrow">Positions</span></div>
+        </div>
       </div>
-      <div class="hero-portrait">
-        <img src="images/yash-hero.png" alt="Yash Banthia" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="portrait-fallback" style="display:none;">Add images/yash-hero.png to show a photo here</div>
-      </div>
-    </div>
-
-    <div class="feature-strip">
-      <div>
-        <h3>Valuation &amp; Modelling</h3>
-        <p>Building the financial models behind a company's numbers — from assumptions to a defensible price.</p>
-      </div>
-      <div>
-        <h3>Equity Research</h3>
-        <p>Digging into filings, industry data, and management commentary to form an independent view.</p>
-      </div>
-      <div>
-        <h3>Market Commentary</h3>
-        <p>Writing dated, honest notes on stocks and sectors — the running notebook behind the research.</p>
+      <div class="hero-portrait hero-visual">
+        <svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--paper-raised)"/>
+              <stop offset="100%" stop-color="var(--paper)"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="400" height="460" fill="url(#skyGrad)"/>
+          <circle cx="300" cy="90" r="34" fill="var(--gold)" opacity="0.55"/>
+          <polygon points="0,300 90,170 150,260 210,140 260,230 320,150 400,280 400,460 0,460" fill="var(--forest)" opacity="0.35"/>
+          <polygon points="0,340 110,220 190,310 270,190 340,290 400,230 400,460 0,460" fill="var(--forest-strong)" opacity="0.85"/>
+          <path d="M110,220 L128,246 L152,238 L172,268" stroke="var(--paper)" stroke-width="1.5" opacity="0.5" fill="none"/>
+          <path d="M270,190 L286,214 L308,206 L326,232" stroke="var(--paper)" stroke-width="1.5" opacity="0.5" fill="none"/>
+        </svg>
+        <div class="hero-visual-quote">
+          <blockquote>"Patience in observation. Conviction in action."</blockquote>
+          <span class="cap">Long charts. Calmer mind. Larger gains.</span>
+        </div>
       </div>
     </div>
 
@@ -454,7 +543,126 @@
 
     <div class="block">
       <div class="block-head">
-        <div><span class="eyebrow">Background</span><h2>Experience</h2></div>
+        <div><span class="eyebrow">Process</span><h2>How I Trade</h2></div>
+        <div class="quote-block" style="margin-top:0; max-width:320px;"><blockquote style="font-size:1.05rem;">"I don't need to be invested. I need to be right about the setup."</blockquote></div>
+      </div>
+      <div class="pillar-grid">
+        <div>
+          <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <span class="eyebrow" style="display:block; margin-bottom:8px;">01 / Discipline</span>
+          <h3>Wait. No setup. No trade.</h3>
+          <p>I'm comfortable sitting in cash for prolonged periods rather than compromising on my strict entry criteria.</p>
+        </div>
+        <div>
+          <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></div>
+          <span class="eyebrow" style="display:block; margin-bottom:8px;">02 / Sizing</span>
+          <h3>Concentrate. When I see it, I size up.</h3>
+          <p>I prefer a small number of high-conviction positions rather than diluting edge across dozens of average ideas.</p>
+        </div>
+        <div>
+          <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg></div>
+          <span class="eyebrow" style="display:block; margin-bottom:8px;">03 / Capital Defense</span>
+          <h3>Control risk. Strictly 2–3% target loss.</h3>
+          <p>Every trade has a clearly defined technical invalidation level before capital is ever committed.</p>
+        </div>
+        <div>
+          <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17l5-6 4 4 7-9"/><path d="M15 6h5v5"/></svg></div>
+          <span class="eyebrow" style="display:block; margin-bottom:8px;">04 / Asymmetry</span>
+          <h3>Let it run. 15–30% initial target.</h3>
+          <p>Take initial profits into strength, then retain a core tranche for multi-quarter trend expansions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head" style="display:block;">
+        <span class="eyebrow">Methodology</span><h2>My Technical Framework</h2>
+      </div>
+      <div class="hero" style="grid-template-columns:0.85fr 1.15fr; align-items:start; padding-bottom:0;">
+        <div>
+          <p class="lede">I study the 3-month, monthly, weekly, daily and hourly charts, with the greatest weight placed on weekly and daily structures.</p>
+          <p class="lede">All timeframes must tell a coherent, synchronized story: strong overarching trend, momentum on mid-frames, and precise execution on hourly charts.</p>
+          <div class="quote-block"><blockquote>"I don't trade a timeframe.<br>I trade alignment."</blockquote></div>
+        </div>
+        <div class="table-wrap" style="margin-bottom:0;">
+          <table class="plan-table">
+            <thead><tr><th>Timeframe</th><th>Focus</th><th>Objective</th></tr></thead>
+            <tbody>
+              <tr><td class="metric">3M</td><td>Macro Trend</td><td class="notes">Big picture secular direction.</td></tr>
+              <tr><td class="metric">Monthly</td><td>Structure</td><td class="notes">Broader trend &amp; accumulation.</td></tr>
+              <tr><td class="metric">Weekly</td><td>Momentum</td><td class="notes">Strength &amp; continuation confirmation.</td></tr>
+              <tr><td class="metric">Daily</td><td>Setup</td><td class="notes">Entry zone, invalidation line.</td></tr>
+              <tr><td class="metric">Hourly</td><td>Execution</td><td class="notes">Fine-tuning the fill &amp; precise stop.</td></tr>
+            </tbody>
+          </table>
+          <div class="table-status"><span class="live">● Status: Synchronized</span><span>All timeframes speaking one story</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head" style="display:block;">
+        <span class="eyebrow">Fundamental Layer</span><h2>Fundamentals Add Conviction</h2>
+      </div>
+      <div class="hero" style="grid-template-columns:0.8fr 1.2fr; align-items:start; padding-bottom:0;">
+        <div>
+          <p class="lede">The technical chart gets me interested, but I inspect the fundamental story to build meaningful size. I analyze recent growth rates, margin expansion, balance sheet strength, industry catalysts, and operating leverage.</p>
+          <div class="insight-box" style="margin-top:0;">
+            <p><span style="color:var(--ink); font-weight:600;">Technical analysis gives me the setup.</span><br>Fundamentals give me the conviction.</p>
+          </div>
+        </div>
+        <div class="card-grid cols-3">
+          <div class="card"><h3>Growth</h3><p>Revenue acceleration, earnings trajectories, and positive forward revisions.</p></div>
+          <div class="card"><h3>Business</h3><p>Qualitative moat changes, market share gains, and structural sector tailwinds.</p></div>
+          <div class="card"><h3>Balance Sheet</h3><p>Solvency, debt profile, free cash flow conversion, and resilience to down-cycles.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head" style="display:block;">
+        <span class="eyebrow">Execution Protocol</span><h2>From Idea to Position</h2>
+        <p class="lede" style="margin-top:8px;">An 8-stage pipeline every position must pass through before, during, and after capital commitment.</p>
+      </div>
+      <div class="phase-grid">
+        <div class="phase-panel">
+          <h4>Phase 01 — Analysis &amp; Sizing</h4>
+          <ul class="step-list">
+            <li><span class="step-num">01</span><div><strong>Scan</strong><span>Identify structural breakouts across major sectors.</span></div></li>
+            <li><span class="step-num">02</span><div><strong>Higher Timeframe Check</strong><span>Confirm alignment across 3M, monthly, and weekly charts.</span></div></li>
+            <li><span class="step-num">03</span><div><strong>Tactical Setup</strong><span>Pinpoint entry zones and precise daily/hourly pivot triggers.</span></div></li>
+            <li><span class="step-num">04</span><div><strong>Fundamentals Layer</strong><span>Cross-reference earnings, margins, and industry catalysts.</span></div></li>
+          </ul>
+        </div>
+        <div class="phase-panel">
+          <h4>Phase 02 — Execution &amp; Lifecycle</h4>
+          <ul class="step-list">
+            <li><span class="step-num">05</span><div><strong>Define Risk</strong><span>Preset hard invalidation stop loss (strict 2–3% portfolio risk).</span></div></li>
+            <li><span class="step-num">06</span><div><strong>Build Position</strong><span>Execute decisively and build high-conviction exposure rapidly.</span></div></li>
+            <li><span class="step-num">07</span><div><strong>Manage &amp; Harvest</strong><span>Book gains into strength (15–30%), trail remaining runner tranche.</span></div></li>
+            <li><span class="step-num">08</span><div><strong>Post-Mortem Review</strong><span>Log trade analytics, emotional state, and rule adherence.</span></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head" style="display:block;">
+        <span class="eyebrow">Background</span><h2>Experience Behind the Framework</h2>
+        <p class="lede" style="margin-top:8px; max-width:60ch;">My market methodology is built upon years working across financial statements, valuations, institutional research, and private investments.</p>
+      </div>
+      <div class="mini-timeline">
+        <div><span class="when">2008 – 2013</span><h4>Audit</h4><span class="sub">Foundational</span></div>
+        <div><span class="when">2016 – 2019</span><h4>Equity Research</h4><span class="sub">HSBC</span></div>
+        <div><span class="when">2019 – 2024</span><h4>Financial Markets</h4><span class="sub">PwC</span></div>
+        <div><span class="when">2025 – Present</span><h4>Asset Management</h4><span class="sub">Outpost Capital</span></div>
+      </div>
+      <a class="view-full-link" href="#full-experience" onclick="document.getElementById('full-experience').scrollIntoView({behavior:'smooth'}); return false;">View full experience ↓</a>
+    </div>
+
+    <div class="block" id="full-experience">
+      <div class="block-head">
+        <div><span class="eyebrow">Full Career</span><h2>The Complete Timeline</h2></div>
       </div>
       <div class="timeline">
         <div class="timeline-item">
@@ -495,6 +703,34 @@
         <div class="who">
           <strong>Yash Banthia</strong>
           <span>Finance &amp; Investment Professional</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="hero" style="grid-template-columns:1fr 1fr; align-items:center; padding-bottom:0;">
+        <div>
+          <span class="eyebrow" style="display:block; margin-bottom:10px;">Evolution</span>
+          <h2 style="font-size:1.8rem; margin-bottom:16px;">What's Next?</h2>
+          <p class="lede">I am increasingly interested in long-term investing and portfolio allocation for my personal portfolio. I am developing my own ideas and frameworks around portfolio construction, asset allocation, position sizing, and long-term compounding.</p>
+          <p class="lede">I'll be documenting these thoughts, ideas, and investment theses in the Investment Insights section of this site as they evolve.</p>
+        </div>
+        <div class="takeaway">
+          <p style="font-family:'Instrument Serif',serif; font-style:italic; font-size:1.3rem; line-height:1.5; color:var(--ink); margin-bottom:14px;">"Trading is about finding the opportunity.<br>Investing is about deciding what deserves to stay."</p>
+          <span class="eyebrow">A longer horizon. A deeper edge.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" style="border-bottom:none;">
+      <div class="channel-cta">
+        <div>
+          <h3>Let's talk markets.</h3>
+          <p>I write about setups I'm watching, ideas I'm developing, and the frameworks I'm building.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn ghost" href="#markets" data-page="markets">Explore Trade Journal</a>
+          <a class="btn" href="#blog" data-page="blog">Explore Investment Insights ↗</a>
         </div>
       </div>
     </div>
