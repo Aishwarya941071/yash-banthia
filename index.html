@@ -282,6 +282,11 @@
   .block-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:24px; }
   .block-head h2{ font-size:1.5rem; }
   .block-head .eyebrow{ margin-bottom:4px; display:block; }
+  .block-head.highlight{
+    background:var(--paper-raised); border-radius:8px; padding:26px 28px; margin-bottom:24px;
+    align-items:center;
+  }
+  .block-head.highlight .quote-block{ border-left-color:var(--forest-strong); }
 
   .timeline{ display:flex; flex-direction:column; gap:22px; }
   .timeline-item{ display:grid; grid-template-columns: 130px 1fr; gap:18px; }
@@ -536,7 +541,7 @@
     </div>
 
     <div class="block">
-      <div class="block-head">
+      <div class="block-head highlight">
         <div><span class="eyebrow">Process</span><h2>How I Trade</h2></div>
         <div class="quote-block" style="margin-top:0; max-width:320px;"><blockquote style="font-size:1.05rem;">"I don't need to be invested. I need to be right about the setup."</blockquote></div>
       </div>
