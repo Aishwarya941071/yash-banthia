@@ -72,10 +72,18 @@
   .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:6px; background:#fff; }
   table.wl-table{ width:100%; border-collapse:collapse; font-size:0.86rem; min-width:920px; }
   table.wl-table th, table.wl-table td{ text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top; white-space:nowrap; }
-  table.wl-table td.rationale{ white-space:normal; max-width:260px; color:var(--ink-soft); font-size:0.84rem; }
   table.wl-table th{ font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); background:var(--paper-raised); font-weight:500; position:sticky; top:0; }
   table.wl-table tr:last-child td{ border-bottom:none; }
-  table.wl-table tbody tr:hover{ background:var(--paper-raised); }
+  table.wl-table tbody tr.entry-row:hover, table.wl-table tbody tr.entry-row:hover + tr.rationale-row{ background:var(--paper-raised); }
+  table.wl-table tr.entry-row.has-rationale td{ border-bottom:none; }
+  table.wl-table tr.rationale-row td{
+    white-space:normal; color:var(--ink-soft); font-size:0.84rem; font-style:italic;
+    padding-top:0; padding-bottom:13px;
+  }
+  table.wl-table tr.rationale-row .rationale-label{
+    font-family:'JetBrains Mono',monospace; font-size:0.64rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); font-style:normal; margin-right:8px;
+  }
 
   .tag{ font-family:'JetBrains Mono',monospace; font-size:0.68rem; padding:3px 8px; border-radius:3px; border:1px solid var(--line); color:var(--ink-soft); white-space:nowrap; }
   .perf{ font-family:'JetBrains Mono',monospace; font-weight:600; font-size:0.92rem; }
@@ -85,12 +93,14 @@
   .price-warn{ color:var(--danger); font-family:'JetBrains Mono',monospace; font-size:0.72rem; }
 
   .row-actions{ display:flex; gap:8px; }
-  .icon-btn{ background:none; border:1px solid var(--line); border-radius:4px; padding:5px 9px; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--ink-soft); }
+  .icon-btn{ background:none; border:1px solid var(--line); border-radius:4px; width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-soft); }
+  .icon-btn svg{ width:14px; height:14px; }
   .icon-btn:hover{ color:var(--forest-strong); border-color:var(--forest-strong); }
   .icon-btn.danger:hover{ color:var(--danger); border-color:var(--danger); }
 
   /* On narrow screens, drop the horizontally-scrolling table in favor of
-     stacked cards — one per entry, each field labeled inline. */
+     stacked cards — one per entry, each field labeled inline. The rationale
+     row visually merges into the same card as its entry row above it. */
   @media (max-width:760px){
     .table-wrap{ overflow-x:visible; border:none; background:none; }
     table.wl-table{ min-width:0; display:block; }
@@ -98,15 +108,17 @@
     table.wl-table tbody{ display:block; }
     table.wl-table tr{ display:block; border:1px solid var(--line); border-radius:6px; background:#fff; padding:14px 16px; margin-bottom:12px; }
     table.wl-table tr:last-child{ margin-bottom:0; }
+    table.wl-table tr.entry-row.has-rationale{ border-bottom:none; border-radius:6px 6px 0 0; margin-bottom:0; padding-bottom:8px; }
+    table.wl-table tr.rationale-row{ border-top:none; border-radius:0 0 6px 6px; margin-top:-1px; padding-top:8px; }
     table.wl-table td{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:7px 0; border-bottom:1px dashed var(--line); white-space:normal; text-align:right; }
-    table.wl-table td:first-child{ padding-top:0; }
-    table.wl-table td:last-child{ border-bottom:none; padding-bottom:0; justify-content:flex-end; }
+    table.wl-table tr td:first-child{ padding-top:0; }
+    table.wl-table tr td:last-child{ border-bottom:none; padding-bottom:0; justify-content:flex-end; }
     table.wl-table td::before{
       content: attr(data-label); font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.05em;
       text-transform:uppercase; color:var(--muted); text-align:left; flex:none;
     }
-    table.wl-table td.rationale{ display:block; text-align:left; }
-    table.wl-table td.rationale::before{ display:block; margin-bottom:6px; }
+    table.wl-table tr.rationale-row td{ display:block; text-align:left; border-bottom:none; padding:0; font-style:italic; }
+    table.wl-table tr.rationale-row .rationale-label{ display:block; margin:0 0 6px; }
   }
 
   .empty-state{ padding:60px 20px; text-align:center; color:var(--muted); font-size:0.9rem; border:1px dashed var(--line); border-radius:6px; }
@@ -145,6 +157,14 @@
         <label><span class="req">Date of analysis</span><input type="date" name="analysis_date" required></label>
         <label><span class="req">Analyzer name</span><input type="text" name="analyzer_name" value="Yash" required></label>
         <label><span class="req">Ticker</span><input type="text" name="ticker" placeholder="e.g. RELIANCE" required style="text-transform:uppercase;"></label>
+        <label><span class="req">Timeframe</span>
+          <select name="timeframe" required>
+            <option value="">Select…</option>
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+          </select>
+        </label>
         <label><span class="req">Category</span>
           <select name="category" required>
             <option value="">Select…</option>
@@ -152,12 +172,13 @@
             <option value="F&O">F&O</option>
           </select>
         </label>
-        <label><span class="req">Strategy time frame</span>
-          <select name="strategy_timeframe" required>
+        <label><span class="req">Strategy</span>
+          <select name="strategy" required>
             <option value="">Select…</option>
-            <option value="Daily">Daily</option>
-            <option value="Weekly">Weekly</option>
-            <option value="Monthly">Monthly</option>
+            <option value="M10">M10</option>
+            <option value="V12">V12</option>
+            <option value="V25">V25</option>
+            <option value="Other">Other</option>
           </select>
         </label>
       </div>
@@ -177,6 +198,7 @@
       <input type="text" id="filter-ticker" placeholder="Filter by ticker...">
       <select id="filter-category"><option value="">All categories</option><option value="Cash">Cash</option><option value="F&O">F&O</option></select>
       <select id="filter-timeframe"><option value="">All timeframes</option><option value="Daily">Daily</option><option value="Weekly">Weekly</option><option value="Monthly">Monthly</option></select>
+      <select id="filter-strategy"><option value="">All strategies</option><option value="M10">M10</option><option value="V12">V12</option><option value="V25">V25</option><option value="Other">Other</option></select>
       <select id="sort-by">
         <option value="date-desc">Newest analysis date</option>
         <option value="date-asc">Oldest analysis date</option>
@@ -204,17 +226,25 @@
         <label>Ticker <input type="text" name="ticker_display" disabled></label>
         <label>Date of analysis <input type="text" name="analysis_date_display" disabled></label>
         <label>Analyzer name<input type="text" name="analyzer_name" required></label>
+        <label>Timeframe
+          <select name="timeframe" required>
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+          </select>
+        </label>
         <label>Category
           <select name="category" required>
             <option value="Cash">Cash</option>
             <option value="F&O">F&O</option>
           </select>
         </label>
-        <label>Strategy time frame
-          <select name="strategy_timeframe" required>
-            <option value="Daily">Daily</option>
-            <option value="Weekly">Weekly</option>
-            <option value="Monthly">Monthly</option>
+        <label>Strategy
+          <select name="strategy" required>
+            <option value="M10">M10</option>
+            <option value="V12">V12</option>
+            <option value="V25">V25</option>
+            <option value="Other">Other</option>
           </select>
         </label>
         <label>Rationale<textarea name="rationale"></textarea></label>
@@ -280,12 +310,14 @@ function applyFiltersAndSort(list){
   const tickerFilter = document.getElementById('filter-ticker').value.trim().toUpperCase();
   const catFilter = document.getElementById('filter-category').value;
   const tfFilter = document.getElementById('filter-timeframe').value;
+  const stratFilter = document.getElementById('filter-strategy').value;
   const sortBy = document.getElementById('sort-by').value;
 
   let out = list.filter(e => {
     if(tickerFilter && !e.ticker.toUpperCase().includes(tickerFilter)) return false;
     if(catFilter && e.category !== catFilter) return false;
-    if(tfFilter && e.strategy_timeframe !== tfFilter) return false;
+    if(tfFilter && e.timeframe !== tfFilter) return false;
+    if(stratFilter && e.strategy !== stratFilter) return false;
     return true;
   });
 
@@ -320,30 +352,38 @@ function render(){
       <div class="week-head"><h3>${fmtDate(date)}</h3><span class="count">${weekLabel(date)} · ${rows.length} entr${rows.length===1?'y':'ies'}</span></div>
       <div class="table-wrap"><table class="wl-table">
         <thead><tr>
-          <th>Ticker</th><th>Category</th><th>Strategy</th><th>Analyzer</th>
+          <th>Ticker</th><th>Timeframe</th><th>Category</th><th>Strategy</th><th>Analyzer</th>
           <th>Ref. Price</th><th>Ref. Date</th><th>Current Price</th><th>Performance</th>
-          <th>Rationale</th><th></th>
+          <th></th>
         </tr></thead>
         <tbody>`;
     for(const e of rows){
       const perfClass = e.performance_pct == null ? 'na' : (e.performance_pct >= 0 ? 'up' : 'down');
       const perfText = e.performance_pct == null ? '—' : (e.performance_pct >= 0 ? '+' : '') + e.performance_pct.toFixed(2) + '%';
       const warn = priceStatusNote(e);
-      html += `<tr>
+      const hasRationale = !!(e.rationale && e.rationale.trim());
+      html += `<tr class="entry-row${hasRationale ? ' has-rationale' : ''}">
         <td class="mono" data-label="Ticker"><strong>${e.ticker}</strong><div style="font-size:0.68rem; color:var(--muted);">${e.exchange||'NSE'}</div></td>
+        <td data-label="Timeframe"><span class="tag">${e.timeframe}</span></td>
         <td data-label="Category"><span class="tag">${e.category}</span></td>
-        <td data-label="Strategy"><span class="tag">${e.strategy_timeframe}</span></td>
+        <td data-label="Strategy"><span class="tag">${e.strategy}</span></td>
         <td data-label="Analyzer">${e.analyzer_name||'—'}</td>
         <td class="mono" data-label="Ref. Price">${fmtPrice(e.reference_price)}</td>
         <td class="mono" data-label="Ref. Date">${fmtDate(e.reference_price_date)}</td>
         <td class="mono" data-label="Current Price">${fmtPrice(e.current_price)}${warn ? `<div class="price-warn">${warn}</div>` : ''}</td>
         <td data-label="Performance"><span class="perf ${perfClass}">${perfText}</span></td>
-        <td class="rationale" data-label="Rationale">${e.rationale ? e.rationale.replace(/</g,'&lt;') : ''}</td>
         <td data-label=""><div class="row-actions">
-          <button class="icon-btn" data-edit="${e.id}">Edit</button>
-          <button class="icon-btn danger" data-delete="${e.id}">Delete</button>
+          <button class="icon-btn" data-edit="${e.id}" title="Edit" aria-label="Edit entry">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </button>
+          <button class="icon-btn danger" data-delete="${e.id}" title="Delete" aria-label="Delete entry">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+          </button>
         </div></td>
       </tr>`;
+      if(hasRationale){
+        html += `<tr class="rationale-row"><td colspan="10"><span class="rationale-label">Rationale</span>${e.rationale.replace(/</g,'&lt;')}</td></tr>`;
+      }
     }
     html += `</tbody></table></div></div>`;
   }
@@ -354,7 +394,14 @@ function render(){
 }
 
 // ---- Add entry ----
+function todayStr(){
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).formatToParts(new Date());
+  const get = (t) => parts.find(p => p.type === t).value;
+  return `${get('year')}-${get('month')}-${get('day')}`;
+}
 document.getElementById('btn-show-add').addEventListener('click', () => {
+  const form = document.getElementById('add-form');
+  form.analysis_date.value = todayStr();
   document.getElementById('add-panel').hidden = false;
 });
 document.getElementById('add-cancel').addEventListener('click', () => {
@@ -429,8 +476,9 @@ function openEdit(id){
   editForm.ticker_display.value = e.ticker + ' (' + (e.exchange||'NSE') + ')';
   editForm.analysis_date_display.value = fmtDate(e.analysis_date);
   editForm.analyzer_name.value = e.analyzer_name || '';
+  editForm.timeframe.value = e.timeframe;
   editForm.category.value = e.category;
-  editForm.strategy_timeframe.value = e.strategy_timeframe;
+  editForm.strategy.value = e.strategy;
   editForm.rationale.value = e.rationale || '';
   document.getElementById('edit-msg').textContent = '';
   editOverlay.hidden = false;
@@ -444,7 +492,7 @@ editForm.addEventListener('submit', async (ev) => {
   try {
     const res = await fetch(FN_WATCHLIST, {
       method: 'PATCH', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ id: data.id, analyzer_name: data.analyzer_name, category: data.category, strategy_timeframe: data.strategy_timeframe, rationale: data.rationale })
+      body: JSON.stringify({ id: data.id, analyzer_name: data.analyzer_name, category: data.category, timeframe: data.timeframe, strategy: data.strategy, rationale: data.rationale })
     });
     if(!res.ok) throw new Error((await res.json()).message || 'Update failed');
     editOverlay.hidden = true;
@@ -536,7 +584,7 @@ function maybeAutoRefresh(){
 document.getElementById('btn-refresh').addEventListener('click', () => refreshPrices(false));
 
 // ---- Filters ----
-['filter-ticker','filter-category','filter-timeframe','sort-by'].forEach(id => {
+['filter-ticker','filter-category','filter-timeframe','filter-strategy','sort-by'].forEach(id => {
   document.getElementById(id).addEventListener('input', render);
   document.getElementById(id).addEventListener('change', render);
 });

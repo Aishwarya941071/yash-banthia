@@ -22,7 +22,7 @@ function json(statusCode, body) {
 // Fields that may be set when an entry is first created — includes the
 // once-only reference price, since it is written at creation time.
 const INSERT_FIELDS = [
-  'analysis_date', 'analyzer_name', 'ticker', 'category', 'strategy_timeframe',
+  'analysis_date', 'analyzer_name', 'ticker', 'category', 'timeframe', 'strategy',
   'rationale', 'exchange', 'reference_price', 'reference_price_date',
   'current_price', 'current_price_asof', 'price_status', 'price_error_message',
 ];
@@ -31,7 +31,7 @@ const INSERT_FIELDS = [
 // analysis_date, exchange, reference_price and reference_price_date —
 // those define the historical record and must never be edited.
 const UPDATE_FIELDS = [
-  'analyzer_name', 'category', 'strategy_timeframe', 'rationale',
+  'analyzer_name', 'category', 'timeframe', 'strategy', 'rationale',
   'current_price', 'current_price_asof', 'price_status', 'price_error_message',
 ];
 
@@ -59,8 +59,8 @@ exports.handler = async (event) => {
 
     if (event.httpMethod === 'POST') {
       const body = JSON.parse(event.body || '{}');
-      if (!body.analysis_date || !body.ticker || !body.category || !body.strategy_timeframe) {
-        return json(400, { message: 'analysis_date, ticker, category, and strategy_timeframe are required' });
+      if (!body.analysis_date || !body.ticker || !body.category || !body.timeframe || !body.strategy) {
+        return json(400, { message: 'analysis_date, ticker, category, timeframe, and strategy are required' });
       }
       const { data, error } = await supabase
         .from('watchlist_entries')
