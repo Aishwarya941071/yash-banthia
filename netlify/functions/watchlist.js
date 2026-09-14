@@ -1,7 +1,14 @@
 const { createClient } = require('@supabase/supabase-js');
 
+// Accepts either the bare project URL or the full REST endpoint
+// (Supabase's dashboard has shown both over time) and normalizes to
+// the bare origin, since supabase-js appends /rest/v1 itself.
+function normalizeSupabaseUrl(url) {
+  return (url || '').trim().replace(/\/rest\/v1\/?$/, '').replace(/\/$/, '');
+}
+
 function client() {
-  return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return createClient(normalizeSupabaseUrl(process.env.SUPABASE_URL), process.env.SUPABASE_SERVICE_ROLE_KEY);
 }
 
 function json(statusCode, body) {
@@ -89,32 +96,6 @@ exports.handler = async (event) => {
 
     return json(405, { message: 'method not allowed' });
   } catch (err) {
-    let raw = null;
-    try {
-      const url = `${process.env.SUPABASE_URL}/rest/v1/watchlist_entries?select=id&limit=1`;
-      const rawRes = await fetch(url, {
-        headers: {
-          apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-          Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
-        },
-      });
-      raw = { status: rawRes.status, body: (await rawRes.text()).slice(0, 500) };
-    } catch (rawErr) {
-      raw = { fetchError: String((rawErr && rawErr.message) || rawErr) };
-    }
-    return json(500, {
-      message: String((err && err.message) || err),
-      debug: {
-        hasUrl: !!process.env.SUPABASE_URL,
-        urlJson: JSON.stringify(process.env.SUPABASE_URL || ''),
-        urlLength: (process.env.SUPABASE_URL || '').length,
-        hasKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-        keyLength: (process.env.SUPABASE_SERVICE_ROLE_KEY || '').length,
-        keyPrefix: (process.env.SUPABASE_SERVICE_ROLE_KEY || '').slice(0, 10),
-        errName: err && err.name,
-        errStack: err && err.stack ? String(err.stack).split('\n').slice(0, 4) : null,
-        rawFetch: raw,
-      },
-    });
+    return json(500, { message: String((err && err.message) || err) });
   }
 };
