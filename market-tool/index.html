@@ -89,6 +89,26 @@
   .icon-btn:hover{ color:var(--forest-strong); border-color:var(--forest-strong); }
   .icon-btn.danger:hover{ color:var(--danger); border-color:var(--danger); }
 
+  /* On narrow screens, drop the horizontally-scrolling table in favor of
+     stacked cards — one per entry, each field labeled inline. */
+  @media (max-width:760px){
+    .table-wrap{ overflow-x:visible; border:none; background:none; }
+    table.wl-table{ min-width:0; display:block; }
+    table.wl-table thead{ display:none; }
+    table.wl-table tbody{ display:block; }
+    table.wl-table tr{ display:block; border:1px solid var(--line); border-radius:6px; background:#fff; padding:14px 16px; margin-bottom:12px; }
+    table.wl-table tr:last-child{ margin-bottom:0; }
+    table.wl-table td{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:7px 0; border-bottom:1px dashed var(--line); white-space:normal; text-align:right; }
+    table.wl-table td:first-child{ padding-top:0; }
+    table.wl-table td:last-child{ border-bottom:none; padding-bottom:0; justify-content:flex-end; }
+    table.wl-table td::before{
+      content: attr(data-label); font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.05em;
+      text-transform:uppercase; color:var(--muted); text-align:left; flex:none;
+    }
+    table.wl-table td.rationale{ display:block; text-align:left; }
+    table.wl-table td.rationale::before{ display:block; margin-bottom:6px; }
+  }
+
   .empty-state{ padding:60px 20px; text-align:center; color:var(--muted); font-size:0.9rem; border:1px dashed var(--line); border-radius:6px; }
 
   .modal-overlay{ position:fixed; inset:0; background:rgba(24,34,40,0.5); display:flex; align-items:center; justify-content:center; z-index:100; padding:20px; }
@@ -312,16 +332,16 @@ function render(){
       const perfText = e.performance_pct == null ? '—' : (e.performance_pct >= 0 ? '+' : '') + e.performance_pct.toFixed(2) + '%';
       const warn = priceStatusNote(e);
       html += `<tr>
-        <td class="mono"><strong>${e.ticker}</strong><div style="font-size:0.68rem; color:var(--muted);">${e.exchange||'NSE'}</div></td>
-        <td><span class="tag">${e.category}</span></td>
-        <td><span class="tag">${e.strategy_timeframe}</span></td>
-        <td>${e.analyzer_name||'—'}</td>
-        <td class="mono">${fmtPrice(e.reference_price)}</td>
-        <td class="mono">${fmtDate(e.reference_price_date)}</td>
-        <td class="mono">${fmtPrice(e.current_price)}${warn ? `<div class="price-warn">${warn}</div>` : ''}</td>
-        <td><span class="perf ${perfClass}">${perfText}</span></td>
-        <td class="rationale">${e.rationale ? e.rationale.replace(/</g,'&lt;') : ''}</td>
-        <td><div class="row-actions">
+        <td class="mono" data-label="Ticker"><strong>${e.ticker}</strong><div style="font-size:0.68rem; color:var(--muted);">${e.exchange||'NSE'}</div></td>
+        <td data-label="Category"><span class="tag">${e.category}</span></td>
+        <td data-label="Strategy"><span class="tag">${e.strategy_timeframe}</span></td>
+        <td data-label="Analyzer">${e.analyzer_name||'—'}</td>
+        <td class="mono" data-label="Ref. Price">${fmtPrice(e.reference_price)}</td>
+        <td class="mono" data-label="Ref. Date">${fmtDate(e.reference_price_date)}</td>
+        <td class="mono" data-label="Current Price">${fmtPrice(e.current_price)}${warn ? `<div class="price-warn">${warn}</div>` : ''}</td>
+        <td data-label="Performance"><span class="perf ${perfClass}">${perfText}</span></td>
+        <td class="rationale" data-label="Rationale">${e.rationale ? e.rationale.replace(/</g,'&lt;') : ''}</td>
+        <td data-label=""><div class="row-actions">
           <button class="icon-btn" data-edit="${e.id}">Edit</button>
           <button class="icon-btn danger" data-delete="${e.id}">Delete</button>
         </div></td>
@@ -479,10 +499,13 @@ async function refreshPrices(auto){
   }
 
   const updates = [];
+  let alreadyCurrent = 0;
+  let failed = 0;
   for(const e of entries){
     const r = results.get(e.ticker);
     if(!r) continue;
-    if(r.status === 'ok' && e.current_price_asof === r.priceDate) continue; // already up to date
+    if(r.status === 'ok' && e.current_price_asof === r.priceDate){ alreadyCurrent++; continue; }
+    if(r.status !== 'ok') failed++;
     updates.push({
       id: e.id,
       current_price: r.status === 'ok' ? r.price : e.current_price,
@@ -495,7 +518,13 @@ async function refreshPrices(auto){
   for(const u of updates){
     await fetch(FN_WATCHLIST, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(u) });
   }
-  statusEl.textContent = `Updated ${updates.length} ticker(s).`;
+
+  const parts = [];
+  const changed = updates.length - failed;
+  if(changed > 0) parts.push(`${changed} price${changed===1?'':'s'} updated`);
+  if(alreadyCurrent > 0) parts.push(`${alreadyCurrent} already current`);
+  if(failed > 0) parts.push(`${failed} failed`);
+  statusEl.textContent = parts.length ? parts.join(' · ') : 'No changes.';
   await loadEntries();
 }
 
