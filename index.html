@@ -86,14 +86,14 @@
     letter-spacing:-0.015em;
   }
   nav.primary{ display:flex; gap:4px; }
-  nav.primary button{
+  nav.primary button, nav.primary a{
     font-family:'JetBrains Mono', monospace;
     font-size:0.74rem; letter-spacing:0.06em; text-transform:uppercase;
     background:none; border:none; color:var(--muted);
-    padding:8px 12px; cursor:pointer; border-radius:3px;
+    padding:8px 12px; cursor:pointer; border-radius:3px; text-decoration:none;
     transition: color .15s ease, background .15s ease;
   }
-  nav.primary button:hover{ color:var(--ink); background:var(--paper-raised); }
+  nav.primary button:hover, nav.primary a:hover{ color:var(--ink); background:var(--paper-raised); }
   nav.primary button[aria-current="page"]{ color:var(--forest-strong); font-weight:600; }
   .nav-toggle{ display:none; }
 
@@ -511,6 +511,7 @@
       <button data-page="blog">Investment Insights</button>
       <button data-page="videos">Videos</button>
       <button data-page="contact">Contact</button>
+      <a href="/market-tool/">Watchlist</a>
     </nav>
   </div>
 </header>
