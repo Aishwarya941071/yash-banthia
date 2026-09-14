@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Watchlist — Yash Banthia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fbf6f7; --paper-raised:#e7eaed; --ink:#182228; --ink-soft:#3d5560;
+    --forest-strong:#3f7590; --line:#d6dade; --muted:#6c7a83; --danger:#a13f2c;
+    --up:#2f7d5c; --down:#a13f2c; --focus:#3f7590;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+  h1,h2{ font-family:'Newsreader',Georgia,serif; font-weight:500; letter-spacing:-0.01em; margin:0; color:var(--ink); }
+  .mono{ font-family:'JetBrains Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .eyebrow{ font-family:'JetBrains Mono',ui-monospace,monospace; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
+
+  .shell{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:760px){ .shell{ padding:0 18px; } }
+
+  header.masthead{ border-bottom:1px solid var(--line); background:var(--paper); position:sticky; top:0; z-index:20; }
+  .masthead-inner{ display:flex; align-items:center; justify-content:space-between; padding:16px 0; gap:16px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); }
+  .brand .name{ font-family:'Newsreader',serif; font-size:1.2rem; font-weight:600; }
+  .brand .tag{ font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--forest-strong); border:1px solid var(--line); padding:3px 8px; border-radius:3px; }
+  .back-link{ font-family:'JetBrains Mono',monospace; font-size:0.74rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); text-decoration:none; }
+  .back-link:hover{ color:var(--forest-strong); }
+
+  main{ padding:36px 0 100px; }
+  .page-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:48px; margin-bottom:26px; }
+  .page-head h1{ font-size:1.9rem; margin:6px 0 4px; }
+  .page-head p{ margin:0; color:var(--ink-soft); font-size:0.92rem; max-width:60ch; }
+
+  .btn{ font-family:'JetBrains Mono',monospace; font-size:0.74rem; letter-spacing:0.05em; text-transform:uppercase; background:var(--forest-strong); color:#fff; border:1px solid var(--forest-strong); padding:10px 16px; border-radius:4px; cursor:pointer; white-space:nowrap; }
+  .btn:hover{ opacity:0.88; }
+  .btn.ghost{ background:none; color:var(--forest-strong); }
+  .btn.danger{ background:var(--danger); border-color:var(--danger); }
+  .btn:disabled{ opacity:0.5; cursor:default; }
+
+  .panel{ border:1px solid var(--line); border-radius:6px; background:var(--paper-raised); padding:22px; margin-bottom:22px; }
+  .panel h2{ font-size:1.1rem; margin-bottom:16px; }
+  .form-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .form-grid.wide{ grid-template-columns:1fr; }
+  @media (max-width:760px){ .form-grid{ grid-template-columns:1fr; } }
+  label{ display:flex; flex-direction:column; gap:5px; font-size:0.82rem; color:var(--ink-soft); }
+  label span.req::after{ content:' *'; color:var(--danger); }
+  input, select, textarea{ font-family:'Inter',sans-serif; font-size:0.9rem; padding:9px 10px; border:1px solid var(--line); border-radius:4px; background:#fff; color:var(--ink); }
+  input:disabled, select:disabled{ background:var(--paper-raised); color:var(--muted); }
+  textarea{ resize:vertical; min-height:70px; font-family:'Inter',sans-serif; }
+  .form-actions{ display:flex; gap:10px; margin-top:16px; align-items:center; flex-wrap:wrap; }
+  .form-msg{ font-size:0.84rem; }
+  .form-msg.error{ color:var(--danger); }
+  .form-msg.ok{ color:var(--up); }
+
+  .toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom:18px; }
+  .filters{ display:flex; gap:8px; flex-wrap:wrap; }
+  .filters select, .filters input{ font-size:0.82rem; padding:7px 9px; }
+  .status-line{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted); }
+
+  .week-group{ margin-bottom:26px; }
+  .week-head{ display:flex; align-items:baseline; gap:10px; padding-bottom:8px; margin-bottom:10px; border-bottom:1px solid var(--line); }
+  .week-head h3{ font-family:'JetBrains Mono',monospace; font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink); }
+  .week-head .count{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted); }
+
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:6px; background:#fff; }
+  table.wl-table{ width:100%; border-collapse:collapse; font-size:0.86rem; min-width:920px; }
+  table.wl-table th, table.wl-table td{ text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top; white-space:nowrap; }
+  table.wl-table th{ font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); background:var(--paper-raised); font-weight:500; position:sticky; top:0; }
+  table.wl-table tr:last-child td{ border-bottom:none; }
+  table.wl-table tbody tr.entry-row:hover, table.wl-table tbody tr.entry-row:hover + tr.rationale-row{ background:var(--paper-raised); }
+  table.wl-table tr.entry-row.has-rationale td{ border-bottom:none; }
+  table.wl-table tr.rationale-row td{
+    white-space:normal; color:var(--ink-soft); font-size:0.84rem; font-style:italic;
+    padding-top:0; padding-bottom:13px;
+  }
+  table.wl-table tr.rationale-row .rationale-label{
+    font-family:'JetBrains Mono',monospace; font-size:0.64rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); font-style:normal; margin-right:8px;
+  }
+
+  .tag{ font-family:'JetBrains Mono',monospace; font-size:0.68rem; padding:3px 8px; border-radius:3px; border:1px solid var(--line); color:var(--ink-soft); white-space:nowrap; }
+  .perf{ font-family:'JetBrains Mono',monospace; font-weight:600; font-size:0.92rem; }
+  .perf.up{ color:var(--up); }
+  .perf.down{ color:var(--down); }
+  .perf.na{ color:var(--muted); font-weight:400; }
+  .price-warn{ color:var(--danger); font-family:'JetBrains Mono',monospace; font-size:0.72rem; }
+
+  .row-actions{ display:flex; gap:8px; }
+  .icon-btn{ background:none; border:1px solid var(--line); border-radius:4px; width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-soft); }
+  .icon-btn svg{ width:14px; height:14px; }
+  .icon-btn:hover{ color:var(--forest-strong); border-color:var(--forest-strong); }
+  .icon-btn.danger:hover{ color:var(--danger); border-color:var(--danger); }
+
+  /* On narrow screens, drop the horizontally-scrolling table in favor of
+     stacked cards — one per entry, each field labeled inline. The rationale
+     row visually merges into the same card as its entry row above it. */
+  @media (max-width:760px){
+    .table-wrap{ overflow-x:visible; border:none; background:none; }
+    table.wl-table{ min-width:0; display:block; }
+    table.wl-table thead{ display:none; }
+    table.wl-table tbody{ display:block; }
+    table.wl-table tr{ display:block; border:1px solid var(--line); border-radius:6px; background:#fff; padding:14px 16px; margin-bottom:12px; }
+    table.wl-table tr:last-child{ margin-bottom:0; }
+    table.wl-table tr.entry-row.has-rationale{ border-bottom:none; border-radius:6px 6px 0 0; margin-bottom:0; padding-bottom:8px; }
+    table.wl-table tr.rationale-row{ border-top:none; border-radius:0 0 6px 6px; margin-top:-1px; padding-top:8px; }
+    table.wl-table td{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:7px 0; border-bottom:1px dashed var(--line); white-space:normal; text-align:right; }
+    table.wl-table tr td:first-child{ padding-top:0; }
+    table.wl-table tr td:last-child{ border-bottom:none; padding-bottom:0; justify-content:flex-end; }
+    table.wl-table td::before{
+      content: attr(data-label); font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.05em;
+      text-transform:uppercase; color:var(--muted); text-align:left; flex:none;
+    }
+    table.wl-table tr.rationale-row td{ display:block; text-align:left; border-bottom:none; padding:0; font-style:italic; }
+    table.wl-table tr.rationale-row .rationale-label{ display:block; margin:0 0 6px; }
+  }
+
+  .empty-state{ padding:60px 20px; text-align:center; color:var(--muted); font-size:0.9rem; border:1px dashed var(--line); border-radius:6px; }
+
+  .modal-overlay{ position:fixed; inset:0; background:rgba(24,34,40,0.5); display:flex; align-items:center; justify-content:center; z-index:100; padding:20px; }
+  .modal{ background:#fff; border-radius:8px; padding:26px; width:100%; max-width:460px; max-height:90vh; overflow-y:auto; }
+  .modal h2{ font-size:1.1rem; margin-bottom:14px; }
+  .modal .form-actions{ margin-top:18px; }
+  [hidden]{ display:none !important; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="shell masthead-inner">
+    <a class="brand" href="/">
+      <span class="name">Yash Banthia</span>
+    </a>
+    <a class="back-link" href="/">← Back to site</a>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="page-head">
+    <div>
+      <h1>Stock Watchlist</h1>
+      <p>A permanent log of weekly stock selections — each entry is a snapshot of a decision on a specific date, with its reference price locked in forever.</p>
+    </div>
+    <button class="btn" id="btn-show-add">+ Add Entry</button>
+  </div>
+
+  <div class="panel" id="add-panel" hidden>
+    <h2>New Watchlist Entry</h2>
+    <form id="add-form">
+      <div class="form-grid">
+        <label><span class="req">Date of analysis</span><input type="date" name="analysis_date" required></label>
+        <label><span class="req">Analyzer name</span><input type="text" name="analyzer_name" value="Yash" required></label>
+        <label><span class="req">Ticker</span><input type="text" name="ticker" placeholder="e.g. RELIANCE" required style="text-transform:uppercase;"></label>
+        <label><span class="req">Timeframe</span>
+          <select name="timeframe" required>
+            <option value="">Select…</option>
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+          </select>
+        </label>
+        <label><span class="req">Category</span>
+          <select name="category" required>
+            <option value="">Select…</option>
+            <option value="Cash">Cash</option>
+            <option value="F&O">F&O</option>
+          </select>
+        </label>
+        <label><span class="req">Strategy</span>
+          <select name="strategy" required>
+            <option value="">Select…</option>
+            <option value="M10">M10</option>
+            <option value="V12">V12</option>
+            <option value="V25">V25</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-grid wide" style="margin-top:14px;">
+        <label>Rationale<textarea name="rationale" placeholder="Setup notes, chart context, why this stock, this week..."></textarea></label>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit" id="add-submit">Save Entry</button>
+        <button class="btn ghost" type="button" id="add-cancel">Cancel</button>
+        <span class="form-msg" id="add-msg"></span>
+      </div>
+    </form>
+  </div>
+
+  <div class="toolbar">
+    <div class="filters">
+      <input type="text" id="filter-ticker" placeholder="Filter by ticker...">
+      <select id="filter-category"><option value="">All categories</option><option value="Cash">Cash</option><option value="F&O">F&O</option></select>
+      <select id="filter-timeframe"><option value="">All timeframes</option><option value="Daily">Daily</option><option value="Weekly">Weekly</option><option value="Monthly">Monthly</option></select>
+      <select id="filter-strategy"><option value="">All strategies</option><option value="M10">M10</option><option value="V12">V12</option><option value="V25">V25</option><option value="Other">Other</option></select>
+      <select id="sort-by">
+        <option value="date-desc">Newest analysis date</option>
+        <option value="date-asc">Oldest analysis date</option>
+        <option value="perf-desc">Best performance</option>
+        <option value="perf-asc">Worst performance</option>
+      </select>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span class="status-line" id="refresh-status"></span>
+      <button class="btn ghost" id="btn-refresh">Refresh Prices</button>
+    </div>
+  </div>
+
+  <div id="content">
+    <div class="empty-state">Loading watchlist…</div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="edit-overlay" hidden>
+  <div class="modal">
+    <h2>Edit Entry</h2>
+    <form id="edit-form">
+      <input type="hidden" name="id">
+      <div class="form-grid wide">
+        <label>Ticker <input type="text" name="ticker_display" disabled></label>
+        <label>Date of analysis <input type="text" name="analysis_date_display" disabled></label>
+        <label>Analyzer name<input type="text" name="analyzer_name" required></label>
+        <label>Timeframe
+          <select name="timeframe" required>
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+          </select>
+        </label>
+        <label>Category
+          <select name="category" required>
+            <option value="Cash">Cash</option>
+            <option value="F&O">F&O</option>
+          </select>
+        </label>
+        <label>Strategy
+          <select name="strategy" required>
+            <option value="M10">M10</option>
+            <option value="V12">V12</option>
+            <option value="V25">V25</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <label>Rationale<textarea name="rationale"></textarea></label>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Save Changes</button>
+        <button class="btn ghost" type="button" id="edit-cancel">Cancel</button>
+        <span class="form-msg" id="edit-msg"></span>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="delete-overlay" hidden>
+  <div class="modal">
+    <h2>Delete this entry?</h2>
+    <p style="color:var(--ink-soft); font-size:0.9rem;" id="delete-desc"></p>
+    <p style="color:var(--danger); font-size:0.82rem;">This permanently removes the historical record. This cannot be undone.</p>
+    <div class="form-actions">
+      <button class="btn danger" id="delete-confirm">Delete</button>
+      <button class="btn ghost" id="delete-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const FN_WATCHLIST = '/.netlify/functions/watchlist';
+const FN_PRICE = '/.netlify/functions/price';
+
+let entries = [];
+
+function fmtPrice(v){ return v == null ? '—' : '₹' + Number(v).toLocaleString('en-IN', {maximumFractionDigits:2}); }
+function fmtDate(d){ if(!d) return '—'; const dt = new Date(d + 'T00:00:00'); return dt.toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}); }
+function weekLabel(d){
+  const dt = new Date(d + 'T00:00:00');
+  const day = dt.getDay();
+  const monday = new Date(dt); monday.setDate(dt.getDate() - ((day + 6) % 7));
+  const sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
+  const opts = {day:'2-digit', month:'short'};
+  return `Week of ${monday.toLocaleDateString('en-IN', opts)} – ${sunday.toLocaleDateString('en-IN', opts)}`;
+}
+
+function priceStatusNote(entry){
+  if(entry.price_status === 'ok') return '';
+  const map = {
+    invalid_ticker: 'Ticker not found on NSE/BSE',
+    no_data: 'No price data available for this date',
+    error: 'Price lookup failed' + (entry.price_error_message ? ': ' + entry.price_error_message : ''),
+    pending: 'Price not yet fetched',
+  };
+  return map[entry.price_status] || 'Price unavailable';
+}
+
+async function loadEntries(){
+  const res = await fetch(FN_WATCHLIST);
+  if(!res.ok){ document.getElementById('content').innerHTML = '<div class="empty-state">Failed to load watchlist. Please refresh.</div>'; return; }
+  entries = await res.json();
+  render();
+  maybeAutoRefresh();
+}
+
+function applyFiltersAndSort(list){
+  const tickerFilter = document.getElementById('filter-ticker').value.trim().toUpperCase();
+  const catFilter = document.getElementById('filter-category').value;
+  const tfFilter = document.getElementById('filter-timeframe').value;
+  const stratFilter = document.getElementById('filter-strategy').value;
+  const sortBy = document.getElementById('sort-by').value;
+
+  let out = list.filter(e => {
+    if(tickerFilter && !e.ticker.toUpperCase().includes(tickerFilter)) return false;
+    if(catFilter && e.category !== catFilter) return false;
+    if(tfFilter && e.timeframe !== tfFilter) return false;
+    if(stratFilter && e.strategy !== stratFilter) return false;
+    return true;
+  });
+
+  out.sort((a,b) => {
+    if(sortBy === 'date-desc') return b.analysis_date.localeCompare(a.analysis_date) || (b.created_at||'').localeCompare(a.created_at||'');
+    if(sortBy === 'date-asc') return a.analysis_date.localeCompare(b.analysis_date);
+    if(sortBy === 'perf-desc') return (b.performance_pct ?? -Infinity) - (a.performance_pct ?? -Infinity);
+    if(sortBy === 'perf-asc') return (a.performance_pct ?? Infinity) - (b.performance_pct ?? Infinity);
+    return 0;
+  });
+  return out;
+}
+
+function render(){
+  const list = applyFiltersAndSort(entries);
+  const content = document.getElementById('content');
+  if(list.length === 0){
+    content.innerHTML = '<div class="empty-state">No watchlist entries yet. Click "+ Add Entry" to log your first weekly selection.</div>';
+    return;
+  }
+
+  const groups = new Map();
+  for(const e of list){
+    const key = e.analysis_date;
+    if(!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(e);
+  }
+
+  let html = '';
+  for(const [date, rows] of groups){
+    html += `<div class="week-group">
+      <div class="week-head"><h3>${fmtDate(date)}</h3><span class="count">${weekLabel(date)} · ${rows.length} entr${rows.length===1?'y':'ies'}</span></div>
+      <div class="table-wrap"><table class="wl-table">
+        <thead><tr>
+          <th>Ticker</th><th>Timeframe</th><th>Category</th><th>Strategy</th><th>Analyzer</th>
+          <th>Ref. Price</th><th>Ref. Date</th><th>Current Price</th><th>Performance</th>
+          <th></th>
+        </tr></thead>
+        <tbody>`;
+    for(const e of rows){
+      const perfClass = e.performance_pct == null ? 'na' : (e.performance_pct >= 0 ? 'up' : 'down');
+      const perfText = e.performance_pct == null ? '—' : (e.performance_pct >= 0 ? '+' : '') + e.performance_pct.toFixed(2) + '%';
+      const warn = priceStatusNote(e);
+      const hasRationale = !!(e.rationale && e.rationale.trim());
+      html += `<tr class="entry-row${hasRationale ? ' has-rationale' : ''}">
+        <td class="mono" data-label="Ticker"><strong>${e.ticker}</strong><div style="font-size:0.68rem; color:var(--muted);">${e.exchange||'NSE'}</div></td>
+        <td data-label="Timeframe"><span class="tag">${e.timeframe}</span></td>
+        <td data-label="Category"><span class="tag">${e.category}</span></td>
+        <td data-label="Strategy"><span class="tag">${e.strategy}</span></td>
+        <td data-label="Analyzer">${e.analyzer_name||'—'}</td>
+        <td class="mono" data-label="Ref. Price">${fmtPrice(e.reference_price)}</td>
+        <td class="mono" data-label="Ref. Date">${fmtDate(e.reference_price_date)}</td>
+        <td class="mono" data-label="Current Price">${fmtPrice(e.current_price)}${warn ? `<div class="price-warn">${warn}</div>` : ''}</td>
+        <td data-label="Performance"><span class="perf ${perfClass}">${perfText}</span></td>
+        <td data-label=""><div class="row-actions">
+          <button class="icon-btn" data-edit="${e.id}" title="Edit" aria-label="Edit entry">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </button>
+          <button class="icon-btn danger" data-delete="${e.id}" title="Delete" aria-label="Delete entry">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+          </button>
+        </div></td>
+      </tr>`;
+      if(hasRationale){
+        html += `<tr class="rationale-row"><td colspan="10"><span class="rationale-label">Rationale</span>${e.rationale.replace(/</g,'&lt;')}</td></tr>`;
+      }
+    }
+    html += `</tbody></table></div></div>`;
+  }
+  content.innerHTML = html;
+
+  content.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => openEdit(b.dataset.edit)));
+  content.querySelectorAll('[data-delete]').forEach(b => b.addEventListener('click', () => openDelete(b.dataset.delete)));
+}
+
+// ---- Add entry ----
+function todayStr(){
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).formatToParts(new Date());
+  const get = (t) => parts.find(p => p.type === t).value;
+  return `${get('year')}-${get('month')}-${get('day')}`;
+}
+document.getElementById('btn-show-add').addEventListener('click', () => {
+  const form = document.getElementById('add-form');
+  form.analysis_date.value = todayStr();
+  document.getElementById('add-panel').hidden = false;
+});
+document.getElementById('add-cancel').addEventListener('click', () => {
+  document.getElementById('add-panel').hidden = true;
+  document.getElementById('add-form').reset();
+  document.getElementById('add-form').analyzer_name.value = 'Yash';
+});
+
+document.getElementById('add-form').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const form = ev.target;
+  const msg = document.getElementById('add-msg');
+  const submitBtn = document.getElementById('add-submit');
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.ticker = data.ticker.trim().toUpperCase();
+
+  submitBtn.disabled = true;
+  msg.textContent = 'Looking up reference price…';
+  msg.className = 'form-msg';
+
+  try {
+    const priceRes = await fetch(`${FN_PRICE}?mode=asof&ticker=${encodeURIComponent(data.ticker)}&date=${data.analysis_date}`);
+    const priceData = await priceRes.json();
+
+    let payload = { ...data };
+    if(priceData.status === 'ok'){
+      payload.reference_price = priceData.price;
+      payload.reference_price_date = priceData.priceDate;
+      payload.current_price = priceData.price;
+      payload.current_price_asof = priceData.priceDate;
+      payload.exchange = priceData.exchange;
+      payload.price_status = 'ok';
+    } else {
+      payload.price_status = priceData.status;
+      payload.price_error_message = priceData.message || null;
+    }
+
+    const saveRes = await fetch(FN_WATCHLIST, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    if(!saveRes.ok){ throw new Error((await saveRes.json()).message || 'Save failed'); }
+
+    if(priceData.status !== 'ok'){
+      msg.textContent = `Saved, but price could not be retrieved (${priceStatusNote(payload)}). You can retry via "Refresh Prices".`;
+      msg.className = 'form-msg error';
+    } else {
+      msg.textContent = 'Saved.';
+      msg.className = 'form-msg ok';
+    }
+
+    await loadEntries();
+    setTimeout(() => {
+      form.reset();
+      form.analyzer_name.value = 'Yash';
+      document.getElementById('add-panel').hidden = true;
+      msg.textContent = '';
+    }, priceData.status === 'ok' ? 600 : 2600);
+  } catch(err){
+    msg.textContent = 'Error: ' + err.message;
+    msg.className = 'form-msg error';
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+
+// ---- Edit entry ----
+const editOverlay = document.getElementById('edit-overlay');
+const editForm = document.getElementById('edit-form');
+
+function openEdit(id){
+  const e = entries.find(x => x.id === id);
+  if(!e) return;
+  editForm.id.value = e.id;
+  editForm.ticker_display.value = e.ticker + ' (' + (e.exchange||'NSE') + ')';
+  editForm.analysis_date_display.value = fmtDate(e.analysis_date);
+  editForm.analyzer_name.value = e.analyzer_name || '';
+  editForm.timeframe.value = e.timeframe;
+  editForm.category.value = e.category;
+  editForm.strategy.value = e.strategy;
+  editForm.rationale.value = e.rationale || '';
+  document.getElementById('edit-msg').textContent = '';
+  editOverlay.hidden = false;
+}
+document.getElementById('edit-cancel').addEventListener('click', () => editOverlay.hidden = true);
+
+editForm.addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const data = Object.fromEntries(new FormData(editForm).entries());
+  const msg = document.getElementById('edit-msg');
+  try {
+    const res = await fetch(FN_WATCHLIST, {
+      method: 'PATCH', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ id: data.id, analyzer_name: data.analyzer_name, category: data.category, timeframe: data.timeframe, strategy: data.strategy, rationale: data.rationale })
+    });
+    if(!res.ok) throw new Error((await res.json()).message || 'Update failed');
+    editOverlay.hidden = true;
+    await loadEntries();
+  } catch(err){
+    msg.textContent = 'Error: ' + err.message;
+    msg.className = 'form-msg error';
+  }
+});
+
+// ---- Delete entry ----
+const deleteOverlay = document.getElementById('delete-overlay');
+let pendingDeleteId = null;
+function openDelete(id){
+  const e = entries.find(x => x.id === id);
+  if(!e) return;
+  pendingDeleteId = id;
+  document.getElementById('delete-desc').textContent = `${e.ticker} — analysis dated ${fmtDate(e.analysis_date)}`;
+  deleteOverlay.hidden = false;
+}
+document.getElementById('delete-cancel').addEventListener('click', () => { deleteOverlay.hidden = true; pendingDeleteId = null; });
+document.getElementById('delete-confirm').addEventListener('click', async () => {
+  if(!pendingDeleteId) return;
+  await fetch(FN_WATCHLIST, { method:'DELETE', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id: pendingDeleteId }) });
+  deleteOverlay.hidden = true;
+  pendingDeleteId = null;
+  await loadEntries();
+});
+
+// ---- Price refresh (batched by distinct ticker, not per-row) ----
+async function refreshPrices(auto){
+  const statusEl = document.getElementById('refresh-status');
+  const distinct = new Map();
+  for(const e of entries){
+    if(!e.ticker) continue;
+    const key = e.ticker + '|' + (e.exchange || 'NSE');
+    if(!distinct.has(key)) distinct.set(key, { ticker: e.ticker, exchange: e.exchange || 'NSE' });
+  }
+  if(distinct.size === 0) return;
+
+  statusEl.textContent = (auto ? 'Auto-' : '') + `refreshing ${distinct.size} ticker(s)…`;
+  const results = new Map();
+  for(const { ticker, exchange } of distinct.values()){
+    try {
+      const res = await fetch(`${FN_PRICE}?mode=latest&ticker=${encodeURIComponent(ticker)}&exchange=${exchange}`);
+      results.set(ticker, await res.json());
+    } catch(err){
+      results.set(ticker, { status: 'error', message: err.message });
+    }
+  }
+
+  const updates = [];
+  let alreadyCurrent = 0;
+  let failed = 0;
+  for(const e of entries){
+    const r = results.get(e.ticker);
+    if(!r) continue;
+    if(r.status === 'ok' && e.current_price_asof === r.priceDate){ alreadyCurrent++; continue; }
+    if(r.status !== 'ok') failed++;
+    updates.push({
+      id: e.id,
+      current_price: r.status === 'ok' ? r.price : e.current_price,
+      current_price_asof: r.status === 'ok' ? r.priceDate : e.current_price_asof,
+      price_status: r.status,
+      price_error_message: r.message || null,
+    });
+  }
+
+  for(const u of updates){
+    await fetch(FN_WATCHLIST, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(u) });
+  }
+
+  const parts = [];
+  const changed = updates.length - failed;
+  if(changed > 0) parts.push(`${changed} price${changed===1?'':'s'} updated`);
+  if(alreadyCurrent > 0) parts.push(`${alreadyCurrent} already current`);
+  if(failed > 0) parts.push(`${failed} failed`);
+  statusEl.textContent = parts.length ? parts.join(' · ') : 'No changes.';
+  await loadEntries();
+}
+
+function maybeAutoRefresh(){
+  // Only auto-refresh tickers that look stale (no price yet, or an error status) — avoids
+  // firing a request for every ticker on every page load when prices are already current.
+  const stale = entries.some(e => e.price_status !== 'ok');
+  if(stale) refreshPrices(true);
+}
+
+document.getElementById('btn-refresh').addEventListener('click', () => refreshPrices(false));
+
+// ---- Filters ----
+['filter-ticker','filter-category','filter-timeframe','filter-strategy','sort-by'].forEach(id => {
+  document.getElementById(id).addEventListener('input', render);
+  document.getElementById(id).addEventListener('change', render);
+});
+
+loadEntries();
+</script>
+</body>
+</html>
