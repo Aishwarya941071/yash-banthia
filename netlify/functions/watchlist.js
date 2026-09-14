@@ -89,6 +89,18 @@ exports.handler = async (event) => {
 
     return json(405, { message: 'method not allowed' });
   } catch (err) {
-    return json(500, { message: String((err && err.message) || err) });
+    return json(500, {
+      message: String((err && err.message) || err),
+      debug: {
+        hasUrl: !!process.env.SUPABASE_URL,
+        urlPreview: (process.env.SUPABASE_URL || '').slice(0, 40),
+        urlLength: (process.env.SUPABASE_URL || '').length,
+        hasKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+        keyLength: (process.env.SUPABASE_SERVICE_ROLE_KEY || '').length,
+        keyPrefix: (process.env.SUPABASE_SERVICE_ROLE_KEY || '').slice(0, 8),
+        errName: err && err.name,
+        errStack: err && err.stack ? String(err.stack).split('\n').slice(0, 4) : null,
+      },
+    });
   }
 };
