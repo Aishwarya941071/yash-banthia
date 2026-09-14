@@ -106,7 +106,7 @@ exports.handler = async (event) => {
       message: String((err && err.message) || err),
       debug: {
         hasUrl: !!process.env.SUPABASE_URL,
-        urlPreview: (process.env.SUPABASE_URL || '').slice(0, 40),
+        urlJson: JSON.stringify(process.env.SUPABASE_URL || ''),
         urlLength: (process.env.SUPABASE_URL || '').length,
         hasKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
         keyLength: (process.env.SUPABASE_SERVICE_ROLE_KEY || '').length,
