@@ -461,6 +461,26 @@
   .takeaway{ border:1px solid var(--forest-strong); border-radius:6px; padding:22px 24px; background:var(--paper-raised); }
   .takeaway p{ margin:0; font-size:0.98rem; line-height:1.7; color:var(--ink); }
 
+  .flow-chain{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:20px 0; }
+  .flow-chain span.step{
+    font-family:'JetBrains Mono',monospace; font-size:0.74rem; letter-spacing:0.02em;
+    border:1px solid var(--line); border-radius:20px; padding:7px 14px; color:var(--ink);
+    background:var(--paper-raised); white-space:nowrap;
+  }
+  .flow-chain span.arrow{ color:var(--muted); font-size:0.9rem; }
+
+  .series-box{ border:1px solid var(--line); border-radius:6px; padding:22px 24px; background:var(--paper-raised); }
+  .series-box h3{ font-size:1rem; margin-bottom:14px; }
+  .series-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .series-list li{
+    display:flex; align-items:baseline; gap:10px; font-size:0.9rem; color:var(--ink-soft);
+    padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .series-list li:last-child{ border-bottom:none; padding-bottom:0; }
+  .series-list .num{ font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--muted); flex:none; width:20px; }
+  .series-list strong{ color:var(--ink); font-weight:600; }
+  .series-list .current{ color:var(--forest-strong); font-family:'JetBrains Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.05em; margin-left:auto; }
+
   .disclaimer-note{
     margin-top:36px; padding-top:20px; border-top:1px solid var(--line);
     font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); line-height:1.6;
@@ -1098,22 +1118,100 @@
   <section class="page" id="page-blog">
     <span class="eyebrow">Writing</span>
     <h1 style="font-size:2.1rem; margin:8px 0 6px;">Investment Insights</h1>
-    <p class="lede" style="margin-bottom:32px;">Longer-form pieces on markets, valuation, and finance — hosted on the external blog and linked from here.</p>
+    <p class="lede" style="margin-bottom:32px;">Longer-form pieces on markets, valuation, and portfolio strategy.</p>
     <div class="card-grid">
       <div class="card">
-        <span class="eyebrow"><span>Sample post</span><span>—</span></span>
-        <h3>Reading a balance sheet like an analyst</h3>
-        <p>Placeholder card — replace the title, date, and summary with your first published post, and point the link below at it.</p>
-        <a class="read" href="#" target="_blank" rel="noopener">Read on blog <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></a>
-      </div>
-      <div class="card">
-        <span class="eyebrow"><span>Sample post</span><span>—</span></span>
-        <h3>What a valuation multiple actually tells you</h3>
-        <p>Second placeholder card. Add as many as you like — each one links out to the corresponding post on your blog platform of choice.</p>
-        <a class="read" href="#" target="_blank" rel="noopener">Read on blog <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></a>
+        <span class="eyebrow"><span>Part 1 of 5</span><span>16 Sep 2026</span></span>
+        <h3>Building an Investment Framework: The ₹1 Crore Portfolio</h3>
+        <p>Kicking off a series on allocating across equity, debt, and commodities dynamically — with market conditions, not fixed percentages, driving the mix.</p>
+        <a class="read" href="#investment-framework-1" data-page="investment-framework-1">Read the article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></a>
       </div>
     </div>
-    <p class="placeholder-note">Both posts above are placeholders. Update the href on each "Read on blog" link to your actual blog URL, and edit the titles/summaries to match.</p>
+  </section>
+
+  <!-- ARTICLE: BUILDING AN INVESTMENT FRAMEWORK (PART 1) -->
+  <section class="page" id="page-investment-framework-1">
+    <a class="back-link" href="#blog" data-page="blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Investment Insights</a>
+
+    <article class="note-article">
+      <div class="article-head">
+        <div class="meta-row">
+          <span class="meta-tag">Portfolio Strategy</span>
+          <span class="meta-tag">Asset Allocation</span>
+          <span class="meta-tag bias-bullish">Part 1 of 5</span>
+        </div>
+        <h1>Building an Investment Framework: The ₹1 Crore Portfolio</h1>
+        <div class="sub">Allocation that moves with the cycle, not a fixed formula</div>
+        <div class="byline">
+          <span>Yash Banthia</span><span class="dot"></span><span>16 Sep 2026</span><span class="dot"></span><span>Series: Investment Framework</span>
+        </div>
+      </div>
+
+      <div class="note-section">
+        <p class="lede">If you are in your late 20s or early 30s, working in a corporate job or running a business, you may already have a meaningful corpus and a strong monthly surplus. Let's take a simple example: a ₹1 crore corpus plus a ₹3–5 lakh monthly surplus.</p>
+        <p class="lede">The question is not simply <em>where should I invest?</em> The bigger question is: how should I allocate my money across different asset classes, and when should that allocation change?</p>
+        <p class="lede">My approach is to build a portfolio across <strong style="color:var(--ink);">Equity, Debt, and Commodities</strong>, with the allocation changing based on market conditions rather than fixed percentages.</p>
+      </div>
+
+      <div class="note-section">
+        <div class="block-head"><span class="eyebrow">01</span><h2>Equity: Data Over Narratives</h2></div>
+        <p class="lede">Within equity, the question is not just <em>how much equity?</em> It is also <em>where within equity?</em> We use relative charts and ratios to compare different parts of the market:</p>
+        <ul class="point-list">
+          <li>Small Cap vs Nifty 50</li>
+          <li>Mid Cap vs Nifty 50</li>
+          <li>Sector vs Nifty 50 — Defense vs Nifty 50, and other sectors and themes vs the broader market</li>
+        </ul>
+        <div class="insight-box">
+          <span class="eyebrow">The objective</span>
+          <p>Identify where money is better placed based on relative valuations, trends, and market structure — rather than simply following the latest narrative.</p>
+        </div>
+      </div>
+
+      <div class="note-section">
+        <div class="block-head"><span class="eyebrow">02</span><h2>Debt: Follow the Interest Rate Cycle</h2></div>
+        <p class="lede">Debt is not just the safe part of the portfolio. There are different ways to invest in it — liquid funds, short-term bonds, medium-term bonds, and long-term bonds — and the choice should depend on the interest rate cycle.</p>
+        <p class="lede">For example, with the Indian 10-year yield around 7%, the direction and structure of the yield chart becomes important. Depending on the cycle, it may make sense to lock in longer-term yields or stay shorter and keep liquidity.</p>
+      </div>
+
+      <div class="note-section">
+        <div class="block-head"><span class="eyebrow">03</span><h2>Commodities: Follow the Cycles</h2></div>
+        <p class="lede">Gold, silver, and other commodities also go through cycles. Instead of deciding a fixed allocation and forgetting about it, we use relative charts such as:</p>
+        <ul class="point-list">
+          <li>Gold vs Nifty 50</li>
+          <li>Gold vs Silver</li>
+          <li>Commodities vs Equities</li>
+        </ul>
+        <p class="lede" style="margin-top:16px;">These help us understand when commodities are relatively expensive or cheap, and whether the allocation needs to change.</p>
+      </div>
+
+      <div class="note-section">
+        <div class="block-head"><span class="eyebrow">The Important Part</span><h2>Allocation Is Dynamic</h2></div>
+        <p class="lede">There will be a baseline allocation, but I don't believe in treating it as permanent. Every 3–6 months, we review the major trends:</p>
+        <div class="flow-chain">
+          <span class="step">Interest Rates</span><span class="arrow">→</span>
+          <span class="step">Equity Valuations</span><span class="arrow">→</span>
+          <span class="step">Relative Strength</span><span class="arrow">→</span>
+          <span class="step">Currency</span><span class="arrow">→</span>
+          <span class="step">Commodities</span><span class="arrow">→</span>
+          <span class="step">Overall Market Structure</span>
+        </div>
+        <p class="lede">The objective is not to predict the market. It is to tilt the portfolio towards areas where the risk-reward looks better, and reduce exposure where conditions are less favourable. The ₹3–5 lakh monthly surplus is also deployed in phases, rather than investing everything at once.</p>
+      </div>
+
+      <div class="note-section" style="margin-bottom:0;">
+        <div class="block-head"><span class="eyebrow">Coming Up</span><h2>In This Series</h2></div>
+        <div class="series-box">
+          <h3>Building an Investment Framework</h3>
+          <ul class="series-list">
+            <li><span class="num">01</span><strong>The Framework</strong><span class="current">Reading now</span></li>
+            <li><span class="num">02</span>Debt</li>
+            <li><span class="num">03</span>Equity</li>
+            <li><span class="num">04</span>Commodities &amp; Other Investments</li>
+          </ul>
+        </div>
+        <p class="lede" style="margin-top:20px;">The goal is simple: build a portfolio that can adapt to different market cycles, instead of a portfolio that depends on one market cycle.</p>
+      </div>
+    </article>
   </section>
 
   <!-- VIDEOS -->
@@ -1170,7 +1268,7 @@
 <script>
   const buttons = document.querySelectorAll('nav.primary button');
   const pages = document.querySelectorAll('section.page');
-  const navAliases = { 'market-tilaknagar': 'markets', 'market-kirloskar': 'markets', 'market-tipsmusic': 'markets' };
+  const navAliases = { 'market-tilaknagar': 'markets', 'market-kirloskar': 'markets', 'market-tipsmusic': 'markets', 'investment-framework-1': 'blog' };
   function showPage(name){
     pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
     const navKey = navAliases[name] || name;
