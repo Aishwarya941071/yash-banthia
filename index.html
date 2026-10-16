@@ -1327,23 +1327,136 @@
     <div class="channel-cta">
       <div>
         <h3>Subscribe on YouTube</h3>
-        <p>Link this to your channel to keep viewers coming back for new uploads.</p>
+        <p>Latest videos from Yash builds with AI</p>
       </div>
-      <a class="btn" href="#" target="_blank" rel="noopener">Visit channel ↗</a>
+      <a class="btn" href="https://www.youtube.com/@YashbuildswithAI" target="_blank" rel="noopener">Visit channel ↗</a>
     </div>
 
-    <div class="video-grid">
-      <div class="video-card">
-        <a href="#" target="_blank" rel="noopener" class="video-thumb"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
-        <div class="video-meta"><span class="eyebrow">Sample video</span><h3>Placeholder title — replace with a video name</h3></div>
-      </div>
-      <div class="video-card">
-        <a href="#" target="_blank" rel="noopener" class="video-thumb"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
-        <div class="video-meta"><span class="eyebrow">Sample video</span><h3>Placeholder title — replace with a video name</h3></div>
+    <div class="video-grid" id="youtube-videos-container">
+      <div style="grid-column:1/-1; text-align:center; padding:40px 20px; color:var(--ink-soft);">
+        <p style="margin:0;">Loading your latest videos...</p>
       </div>
     </div>
-    <p class="placeholder-note">Both thumbnails and the channel button are placeholders — point them at your real YouTube channel and video URLs.</p>
   </section>
+
+  <script>
+    // Fetch and display YouTube videos from Yash builds with AI channel
+    async function loadYouTubeVideos() {
+      const container = document.getElementById('youtube-videos-container');
+      const CHANNEL_ID = 'UCcGfAvXP4JJQoJpdyBHLjbw';
+      
+      try {
+        // Try to fetch from Netlify function first
+        const response = await fetch('/.netlify/functions/get-youtube-videos');
+        
+        if (response.ok) {
+          const videos = await response.json();
+          renderVideos(videos, container);
+        } else {
+          // Fallback: try RSS feed with CORS proxy
+          fetchVideosFromRSS(CHANNEL_ID, container);
+        }
+      } catch (error) {
+        console.log('Trying alternative fetch method...');
+        fetchVideosFromRSS(CHANNEL_ID, container);
+      }
+    }
+
+    async function fetchVideosFromRSS(channelId, container) {
+      try {
+        const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(rssUrl)}`;
+        
+        const response = await fetch(proxyUrl);
+        if (!response.ok) throw new Error('Failed to fetch');
+        
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        
+        if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
+          throw new Error('XML parse error');
+        }
+        
+        const entries = xmlDoc.querySelectorAll('entry');
+        const videos = [];
+        
+        for (let i = 0; i < Math.min(6, entries.length); i++) {
+          const entry = entries[i];
+          const idNode = entry.querySelector('id');
+          const titleNode = entry.querySelector('title');
+          const linkNode = entry.querySelector('link[rel="alternate"]');
+          
+          if (idNode && titleNode && linkNode) {
+            const videoId = idNode.textContent.split(':')[2];
+            const title = titleNode.textContent;
+            const url = linkNode.getAttribute('href');
+            
+            videos.push({
+              id: videoId,
+              title: title,
+              url: url,
+              thumbnail: `https://img.youtube.com/vi/${videoId}/sddefault.jpg`
+            });
+          }
+        }
+        
+        if (videos.length > 0) {
+          renderVideos(videos, container);
+        } else {
+          showFallback(container);
+        }
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+        showFallback(container);
+      }
+    }
+
+    function renderVideos(videos, container) {
+      container.innerHTML = videos.map(video => `
+        <div class="video-card">
+          <a href="${video.url}" target="_blank" rel="noopener" class="video-thumb">
+            <img src="${video.thumbnail}" alt="${escapeHtml(video.title)}" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </a>
+          <div class="video-meta">
+            <span class="eyebrow">YouTube</span>
+            <h3 style="margin:0;">${escapeHtml(video.title)}</h3>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showFallback(container) {
+      container.innerHTML = `
+        <div style="grid-column:1/-1; text-align:center; padding:40px 20px;">
+          <p style="margin:0 0 16px; color:var(--ink-soft);">Unable to load videos at the moment.</p>
+          <a href="https://www.youtube.com/@YashbuildswithAI" target="_blank" rel="noopener" class="btn">Visit YouTube Channel →</a>
+        </div>
+      `;
+    }
+
+    function escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, m => map[m]);
+    }
+
+    // Load videos when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadYouTubeVideos);
+    } else {
+      loadYouTubeVideos();
+    }
+  </script>
+
+<!-- END VIDEOS SECTION -->
+
 
   <!-- CONTACT -->
   <section class="page" id="page-contact">
