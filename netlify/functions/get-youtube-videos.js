@@ -1,43 +1,30 @@
 // netlify/functions/get-youtube-videos.js
-// Fetches videos from your YouTube channel
-
-const xml2js = require('xml2js');
 
 exports.handler = async (event, context) => {
   try {
     const CHANNEL_ID = 'UCcGfAvXP4JJQoJpdyBHLjbw';
-    const MAX_RESULTS = 6;
-    
-    // Fetch RSS feed from YouTube
     const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
     
     const response = await fetch(feedUrl);
-    
-    if (!response.ok) {
-      throw new Error(`YouTube feed returned ${response.status}`);
-    }
-    
     const xmlText = await response.text();
     
-    // Parse XML manually (simpler, no dependencies)
+    // Simple regex parsing instead of DOM parser
     const videos = [];
-    
-    // Extract video entries using regex
     const entryRegex = /<entry>([\s\S]*?)<\/entry>/g;
     let match;
     let count = 0;
     
-    while ((match = entryRegex.exec(xmlText)) !== null && count < MAX_RESULTS) {
-      const entryXml = match[1];
+    while ((match = entryRegex.exec(xmlText)) !== null && count < 6) {
+      const entryContent = match[1];
       
       // Extract video ID
-      const idMatch = entryXml.match(/<yt:videoId>([^<]+)<\/yt:videoId>/);
+      const idMatch = entryContent.match(/<yt:videoId>([^<]+)<\/yt:videoId>/);
       if (!idMatch) continue;
       
       const videoId = idMatch[1];
       
       // Extract title
-      const titleMatch = entryXml.match(/<title>([^<]+)<\/title>/);
+      const titleMatch = entryContent.match(/<title>([^<]+)<\/title>/);
       const title = titleMatch ? titleMatch[1] : 'Untitled';
       
       videos.push({
@@ -51,10 +38,6 @@ exports.handler = async (event, context) => {
       count++;
     }
     
-    if (videos.length === 0) {
-      throw new Error('No videos found in feed');
-    }
-    
     return {
       statusCode: 200,
       headers: {
@@ -65,18 +48,14 @@ exports.handler = async (event, context) => {
     };
     
   } catch (error) {
-    console.error('Error in get-youtube-videos:', error);
-    
+    console.error('Error:', error.message);
     return {
       statusCode: 500,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({
-        error: error.message,
-        message: 'Failed to fetch YouTube videos'
-      })
+      body: JSON.stringify({ error: 'Failed to fetch videos' })
     };
   }
 };
